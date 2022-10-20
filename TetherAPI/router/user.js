@@ -5,7 +5,8 @@ const verify = require('../middleware/jwt')
 const auth=require('../controller/authController')
 
 router.post('/signup',auth.signup);
-router.post('/login',auth.login)
+router.post('/login',auth.login);
+router.post('/updateUser',auth.updateUser)
 
 
 

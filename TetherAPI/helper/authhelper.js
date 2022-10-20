@@ -1,4 +1,6 @@
-
+const userModel=require('../model/userModel')
+const bcrypt=require('bcrypt');
+const jwt=require('jsonwebtoken')
 
 const authHelper = {
 
@@ -10,7 +12,12 @@ const authHelper = {
 
                 userModel.create({
                     email: userData.email,
-                    password: userData.password
+                    password: userData.password,
+                    first_name:userData.fname,
+                    last_name:userData.lname,
+                    gender:userData.gender,
+                    DOB:userData.dob
+
                 }
                 ).then((response) => {
                     const user = {
@@ -22,7 +29,7 @@ const authHelper = {
                     resolve(user)
                 }).catch(err => reject(err))
             } else {
-                resolve({ msg: 'user Alredy Exist' })
+                resolve({ msg: 'User Alredy Exist' })
             }
 
 
@@ -41,8 +48,7 @@ const authHelper = {
                         if (res) {
 
                             const user = {
-                                userId: userData._id,
-                                name: userData.email
+                         
                             }
                             const token = jwt.sign(
                                 {
@@ -70,6 +76,11 @@ const authHelper = {
             }).catch(err => reject(err))
         })
 
+    },
+    doUpdateUser:(userData)=>{
+        return new Promise((resolve,reject)=>{
+            
+        })
     }
 
 

@@ -5,7 +5,7 @@ const createError = require('http-errors');
 const mongoose = require("mongoose");
 const cors = require("cors")
 
-const authRouter=require('./router/authentication')
+const userRouter=require('./router/user')
 
 const app = express();
 
@@ -19,8 +19,10 @@ mongoose.connect(process.env.mongoURL).then((res) => {
   console.log("mongodb connected")
 })
 
-
-app.use('/',authRouter)
+// app.get('/',(req,res)=>{
+//   res.send('hello')
+// })
+app.use('/',userRouter)
 
 app.use(function (req, res, next) {
     next(createError(404));
