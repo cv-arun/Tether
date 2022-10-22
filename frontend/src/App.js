@@ -1,16 +1,20 @@
-import {Routes,Route} from "react-router-dom";
-import './App.css';
+import React from 'react'
 
-import Home from './pages/home';
-import Signup from './pages/signup';
-import Login from './pages/login'
+import './App.css';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import ProtectedRoutes from './routes.js/protectedRoutes';
+import UnprotectedRoutes from './routes.js/unprotectedRoutes';
+
+
+
 function App() {
+
   return (
-    <Routes>
-     <Route exact path="/" element={<Home />} />
-     <Route  path="/signup" element={<Signup />} />
-     <Route  path="/login" element={<Login />} />
-    </Routes>
+    <GoogleOAuthProvider clientId="180289980522-fpgd0r0agiea9bmmko725thq7tha7bu2.apps.googleusercontent.com">
+      <ProtectedRoutes/>
+      <UnprotectedRoutes/>
+     
+    </GoogleOAuthProvider>
   );
 }
 

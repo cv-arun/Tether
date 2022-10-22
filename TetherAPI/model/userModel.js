@@ -6,13 +6,13 @@ const userSchema = mongoose.Schema(
   {
     first_name: {
       type: String,
-      required: [true, "first name is required"],
+      // required: [true, "first name is required"],
       trim: true,
       text: true,
     },
     last_name: {
       type: String,
-      required: [true, "last name is required"],
+      // required: [true, "last name is required"],
       trim: true,
       text: true,
     },
@@ -26,12 +26,11 @@ const userSchema = mongoose.Schema(
 
     email: {
       type: String,
-      required: [true, "email is required"],
+      // required: [true, "email is required"],
       trim: true,
     },
     password: {
-      type: String,
-      required: [true, "password is required"],
+      type: String
     },
     picture: {
       type: String,
@@ -45,12 +44,10 @@ const userSchema = mongoose.Schema(
     },
     gender: {
       type: String,
-      required: [true, "gender is required"],
       trim: true,
     },
     DOB: {
       type: String,
-      required: true,
       trim: true,
     },
    

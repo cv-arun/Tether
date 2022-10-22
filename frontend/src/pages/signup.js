@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Box } from '@mui/material';
@@ -23,9 +23,9 @@ import { Link, useNavigate } from 'react-router-dom'
 
 
 function Signup() {
-    const [data, setData, ClearData] = useHandleForm({})
+    const [data, setData, clearData] = useHandleForm({})
     const [day, setDay] = useState('dd/mm/yyyy');
-    const [msg,setMsg]=useState('')
+    const [msg, setMsg] = useState('')
 
     const navigate = useNavigate()
 
@@ -41,14 +41,17 @@ function Signup() {
         console.log(data)
         axios.post('/signup', data).then(response => {
             console.log(response.data)
-            response.data.msg? setMsg(response.data.msg):setMsg('')
-            response && response.data.userId && navigate('/login');
+            response.data.msg ? setMsg(response.data.msg) : response.data.userId && navigate('/login');
+
 
         })
     }
     const setDOB = (e) => {
         setDay(`${e.$M + 1}/${e.$D}/${e.$y}`)
     }
+    useEffect(() => {
+        return clearData()
+    }, [])
 
     return (
         <Box sx={{
@@ -62,7 +65,7 @@ function Signup() {
             borderRadius: 1
         }}>
             <Box sx={{ typography: 'subtitle2', fontSize: 30, textAlign: 'center' }}>Signup</Box>
-            <Box sx={{ typography: 'body2', fontSize: 15, textAlign: 'center',color:'red' }}>{msg}</Box>
+            <Box sx={{ typography: 'body2', fontSize: 15, textAlign: 'center', color: 'red' }}>{msg}</Box>
             <Box sx={{
                 display: 'flex',
                 justifyContent: 'center'
@@ -145,7 +148,7 @@ function Signup() {
                         </div>
                         <Box sx={{ typography: 'body', fontSize: 15, textAlign: 'center' }}>Already have an account?</Box>
                         <Link style={{ textAlign: 'center' }} to='/login'>Login</Link>
-                        
+
 
                     </Box>
                 </FormControl>

@@ -19,9 +19,7 @@ mongoose.connect(process.env.mongoURL).then((res) => {
   console.log("mongodb connected")
 })
 
-// app.get('/',(req,res)=>{
-//   res.send('hello')
-// })
+
 app.use('/',userRouter)
 
 app.use(function (req, res, next) {

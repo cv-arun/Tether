@@ -1,17 +1,22 @@
-import React,{useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Box } from '@mui/material';
 import useHandleForm from '../costomHooks/usehandleForm';
 import axios from '../axios'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
+
+
 
 
 function Login() {
 
+
+
     const [data, setData, clearData] = useHandleForm({});
     const navigate = useNavigate();
-    const [msg,setMsg]=useState('')
+    const [msg, setMsg] = useState('')
 
 
     const style = {
@@ -28,9 +33,19 @@ function Login() {
             console.log(response.data)
             response && localStorage.setItem('userKey', JSON.stringify(response.data.token))
             response && response.data.token && navigate('/')
-            response.data.msg ?setMsg(response.data.msg):setMsg('')
-        }).catch(err=>console.log(err))
+            response.data.msg ? setMsg(response.data.msg) : setMsg('')
+        }).catch(err => console.log(err))
     }
+    const credentialResponse = (credentialResponse) => {
+        axios.post('/loginGoogle', { credentialResponse }).then((response) => {
+            response && localStorage.setItem('userKey', JSON.stringify(response.data.token))
+            response.data.token && navigate('/')
+        })
+    }
+
+    useEffect(() => {
+        return clearData()
+    }, [])
 
     return (
         <Box sx={{
@@ -43,7 +58,7 @@ function Login() {
             boxShadow: 5, borderRadius: 1
         }}>
             <Box sx={{ typography: 'subtitle2', fontSize: 30, textAlign: 'center' }}>Login</Box>
-            <Box  sx={{ typography: 'body2', fontSize: 15, textAlign: 'center',color:'red' }}>{msg}</Box>
+            <Box sx={{ typography: 'body2', fontSize: 15, textAlign: 'center', color: 'red' }}>{msg}</Box>
             <form >
                 <Box sx={style}>
 
@@ -76,9 +91,24 @@ function Login() {
                         </Box>
                     </div>
                     <Box sx={{ typography: 'body', fontSize: 15, textAlign: 'center' }}>Dont have an account?</Box>
-                    <Link style={{textAlign:'center'}} to='/signup'>Signup</Link>
+                    <Link style={{ textAlign: 'center' }} to='/signup'>Signup</Link>
                 </Box>
             </form>
+            <Box sx={{ typography: 'body2', fontSize: 15, textAlign: 'center', color: 'blue', marginTop: 2 }}>OR</Box>
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginTop: 4,
+                marginBottom: 2
+
+            }}><GoogleLogin
+                    onSuccess={credentialResponse}
+                    onError={() => {
+                        console.log('Login Failed');
+                    }}
+                /></Box>
+
         </Box>
     )
 }

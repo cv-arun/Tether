@@ -6,6 +6,7 @@ const auth=require('../controller/authController')
 
 router.post('/signup',auth.signup);
 router.post('/login',auth.login);
+router.post('/loginGoogle',auth.loginWithGoogle);
 router.post('/updateUser',auth.updateUser)
 
 
