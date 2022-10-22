@@ -28,7 +28,7 @@ function Login() {
         marginTop: 5
     }
     const handleSubmit = () => {
-        console.log(data)
+
         axios.post('/login', data).then(response => {
             console.log(response.data)
             response && localStorage.setItem('userKey', JSON.stringify(response.data.token))

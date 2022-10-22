@@ -6,14 +6,15 @@ import Login from '../pages/login'
 
 
 function UnprotectedRoutes() {
-  return (
-   <>
-    <Routes>
+    return (
+        <>
+            <Routes>
+
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
             </Routes>
-   </>
-  )
+        </>
+    )
 }
 
 export default UnprotectedRoutes
