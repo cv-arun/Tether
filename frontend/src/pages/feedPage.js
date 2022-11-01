@@ -1,23 +1,14 @@
 
 import React from 'react';
-
-
 import Sidebar from '../layout/sidebar';
 
 
-
-
-
-function Home() {
-
+function feed() {
   return (
     <>
-   
-    <Sidebar />
-    
-  
+   <Sidebar/>
     </>
   )
 }
 
-export default Home
+export default feed
