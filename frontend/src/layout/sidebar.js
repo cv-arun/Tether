@@ -95,7 +95,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function Sidebar(props) {
     console.log(props)
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
@@ -164,7 +164,7 @@ export default function Sidebar(props) {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
-                        Mini variant drawer
+                        Tether
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -176,6 +176,7 @@ export default function Sidebar(props) {
                 </DrawerHeader>
                 <Divider />
                 <List>
+
                     {sidebar.map((content, index) => (
                         <ListItem key={content.label} disablePadding sx={{ display: 'block' }} onClick={(e) => handleClick(content.label)}>
                             <ListItemButton
@@ -198,6 +199,7 @@ export default function Sidebar(props) {
                             </ListItemButton>
                         </ListItem>
                     ))}
+
                 </List>
                 <Divider />
 

@@ -1,12 +1,13 @@
 
 import React from 'react';
 import Sidebar from '../layout/sidebar';
+import Feed from '../components/feed';
 
 
 function feed() {
   return (
     <>
-   <Sidebar/>
+   <Sidebar component={<Feed/>}/>
     </>
   )
 }

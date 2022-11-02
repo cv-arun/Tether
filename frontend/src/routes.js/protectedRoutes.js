@@ -22,8 +22,8 @@ function ProtectedRoutes() {
     return (
         <>
             <Routes>
-                <Route exact path="/" element={<Home />} />
-                <Route exact path="/feed" element={<Feed />} />
+                <Route exact path="/home" element={<Home />} />
+                <Route exact path="/" element={<Feed />} />
                 <Route exact path="/chat" element={<Chat />} />
                 <Route exact path="/community" element={<Mycommunity />} />
                 <Route exact path="/notification" element={<Notification />} />
