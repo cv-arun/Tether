@@ -15,12 +15,12 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
-  borderRadius:'10px' ,
+  borderRadius: '10px',
   boxShadow: 24,
   pt: 2,
   px: 4,
   pb: 3,
-  shadow:''
+  shadow: ''
 };
 
 
@@ -45,8 +45,8 @@ export default function NestedModal(props) {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...style, width: 400}}>
-          <div className='h-80'>
+        <Box sx={{ ...style, width: 400 }}>
+          <div className='h-80 bg-white'>
             <div className='flex '><h2 className='text-2xl text-right w-4/6'>Create Post</h2>
               <span className='w-2/6 flex flex-row-reverse'><CloseIcon onClick={handleClose} /></span></div>
             <hr />
@@ -64,12 +64,16 @@ export default function NestedModal(props) {
 
             </div>
             <div className='flex flex-col  justify-between  h-[220px]'>
-              <input placeholder='Whats on your Mind?' className='border-0 w-full mr-5 p-4' />
+             
+              <textarea placeholder='Whats on your Mind?' className='border-0 w-full mr-5 p-4 scrollbar-hide focus-visible:outline-none' ></textarea>
               <div className='mb-3'>
                 <div className='w-full my-3 h-[60px] rounded-md shadow-md ring-2 ring-slate-200 flex items-center justify-between px-4'>
                   <p>Add to your Post</p>
-                  <AddPhotoAlternateIcon />
-                  <AddReactionIcon />
+
+                  <Button><input id='choose-file' style={{display:'none'}} type={'file'}/>
+                  <label htmlFor="choose-file"><AddPhotoAlternateIcon /></label></Button>
+                  <Button> <AddReactionIcon /></Button>
+
                 </div>
                 <Button variant='contained' sx={{ width: '100%' }}>Post</Button>
               </div>

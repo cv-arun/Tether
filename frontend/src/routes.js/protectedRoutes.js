@@ -7,7 +7,7 @@ import Mycommunity from '../pages/myCommunity';
 import Notification from '../pages/notification';
 import Profile from '../pages/profile';
 import Settings from '../pages/settings';
-import Chat from '@mui/icons-material/Chat';
+import Chat from '../pages/chat';
 
 
 

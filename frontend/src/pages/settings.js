@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
+import Sidebar from '../layout/sidebar';
 
 function Settings() {
   return (
-    <div>settings</div>
+  <Sidebar/>
   )
 }
 

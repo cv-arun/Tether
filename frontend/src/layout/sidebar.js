@@ -109,7 +109,7 @@ export default function Sidebar(props) {
     const handleClick = (label) => {
         switch (label) {
             case 'Feed':
-                navigate('/feed')
+                navigate('/')
                 break;
             case 'Community':
                 navigate('/community')
@@ -147,7 +147,7 @@ export default function Sidebar(props) {
     { label: 'Logout', icon: <LogoutIcon /> }]
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex',backgroundColor:'#f0f2f5' }}>
             <CssBaseline />
             <AppBar position="fixed" open={open}>
                 <Toolbar>
@@ -206,7 +206,7 @@ export default function Sidebar(props) {
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
-                {props.component}
+                <div>{props.component?props.component:<p>Empty page</p>}</div>
             </Box>
         </Box>
     );

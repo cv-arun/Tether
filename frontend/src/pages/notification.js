@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
+import Sidebar from '../layout/sidebar';
 
 function notification() {
   return (
-    <div>notification</div>
+    <Sidebar/>
   )
 }
 

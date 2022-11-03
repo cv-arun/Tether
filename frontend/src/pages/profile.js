@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
+import Sidebar from '../layout/sidebar';
 
 function profile() {
   return (
-    <div>profile</div>
+    <Sidebar/>
   )
 }
 
