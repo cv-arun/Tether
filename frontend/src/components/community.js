@@ -9,17 +9,17 @@ function Community() {
     const [tabs, setTabs] = useState(1);
     const [people, setPeople] = useState([])
     useEffect(() => {
-        getPeople().then(data => { 
+        getPeople().then(data => {
             setPeople(data)
         })
 
     }, [tabs])
-    const handleClick=(e)=>{
-        e.target.id!==''?console.log(e.target.id):console.log('clicked outside button')
-        requestFollow(e.target.id).then(data=>{
+    const handleClick = (e) => {
+        e.target.id !== '' ? console.log(e.target.id) : console.log('clicked outside button')
+        requestFollow(e.target.id).then(data => {
             console.log(data)
         })
-        
+
     }
 
     return (
@@ -59,9 +59,9 @@ function Community() {
                 </div>}
                 {tabs === 3 && <div className='flex flex-wrap gap-4' onClick={handleClick}>
                     {people.map((curr, index) => {
-                        return <div  key={index} className='bg-white shadow-lg w-[150px] md:w-[180px]  mx-auto flex flex-col gap-2 h-fit p-2'>
+                        return <div key={index} className='bg-white shadow-lg w-[150px] md:w-[180px]  mx-auto flex flex-col gap-2 h-fit p-2'>
                             <img src={curr.picture} alt='profile' />
-                            <p className='px-1'>{curr.first_name+' '+curr.last_name}</p>
+                            <p className='px-1'>{curr.first_name + ' ' + curr.last_name}</p>
                             <div className='px-1'><Button id={`${curr._id}`} className='w-full' variant="contained">Follow</Button></div>
                         </div>
                     })}

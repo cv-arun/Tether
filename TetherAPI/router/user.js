@@ -10,6 +10,7 @@ router.post('/login',auth.login);
 router.post('/loginGoogle',auth.loginWithGoogle);
 router.post('/updateUser',auth.updateUser)
 router.get('/getPeople',verify,userController.getPeople)
+router.post('/reqestFollow',verify,userController.requestFollow)
 
 
 
