@@ -94,7 +94,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Sidebar(props) {
-    console.log(props)
+    React.useEffect(() => {
+        var s=window.screen.availWidth
+        console.log(s)
+    },[window.screen.availWidth])
     const navigate = useNavigate()
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -147,7 +150,7 @@ export default function Sidebar(props) {
     { label: 'Logout', icon: <LogoutIcon /> }]
 
     return (
-        <Box sx={{ display: 'flex',backgroundColor:'#f0f2f5' }}>
+        <Box sx={{ display: 'flex', backgroundColor: '#f0f2f5' }}>
             <CssBaseline />
             <AppBar position="fixed" open={open}>
                 <Toolbar>
@@ -206,7 +209,7 @@ export default function Sidebar(props) {
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
-                <div>{props.component?props.component:<p>Empty page</p>}</div>
+                <div>{props.component ? props.component : <p>Empty page</p>}</div>
             </Box>
         </Box>
     );

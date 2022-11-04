@@ -36,6 +36,7 @@ export default function NestedModal(props) {
   React.useEffect(() => {
     setOpen(true)
   }, [props])
+
   return (
     <div>
       <Button onClick={handleOpen}></Button>

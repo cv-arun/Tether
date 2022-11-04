@@ -24,8 +24,8 @@ module.exports = {
     
         const decoded = jwt_decode(req.body.credentialResponse.credential);
         let user={
-            first_name:decoded.given_name,
-            last_name:decoded.family_name,
+            fname:decoded.given_name,
+            lname:decoded.family_name,
             email:decoded.email,
             picture:decoded.picture
         }

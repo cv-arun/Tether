@@ -50,7 +50,7 @@ const userSchema = mongoose.Schema(
       type: String,
       trim: true,
     },
-   
+
     verified: {
       type: Boolean,
       default: false,
@@ -61,11 +61,17 @@ const userSchema = mongoose.Schema(
     },
     following: {
       type: Array,
-      default: [],
+      default: [{
+        type: ObjectId,
+        ref: "User",
+      }],
     },
     followers: {
       type: Array,
-      default: [],
+      default: [{
+        type: ObjectId,
+        ref: "User",
+      }],
     },
     requests: {
       type: Array,
