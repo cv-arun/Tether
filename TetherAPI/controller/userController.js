@@ -14,5 +14,18 @@ module.exports = {
 
         })
 
-    }
+    },
+    requestUnFollow: (req, res, next) => {
+       
+        userHelper.doUnFollow(req.userId,req.body.friendId).then(data=>{
+            res.json(data)
+
+        })
+
+    },
+    getFollow: (req, res, next) => {
+        userHelper.getFollow(req.userId).then(data => {
+            res.json(data)
+        })
+    },
 }

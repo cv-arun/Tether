@@ -2,9 +2,9 @@ const userModel = require('../model/userModel')
 
 const userHelper = {
     getPeople: async (myId) => {
-        let follow = await userHelper.getFollow(myId)
+        let user =myId?await userModel.findById(myId):'';
         return new Promise((resolve, reject) => {
-            userModel.find({following:{$nin:follow.following}}).then(data => {
+            userModel.find({_id:{$nin:user.following}},{password:0}).then(data => {
                 resolve(data)
             }).catch(err => reject(err))
         })
@@ -21,14 +21,14 @@ const userHelper = {
         return new Promise((resolve, reject) => {
 
             userModel.findByIdAndUpdate(myId, { $pull: { following: friendId } }).then(data => {
-                console.log(data, "do fo")
+               
                 resolve(data)
             }).catch(err => reject(err))
         })
     },
     getFollow: (myId) => {
         return new Promise((resolve, reject) => {
-            userModel.findById(myId, { followers: 1, following: 1 }).then(data => {
+            userModel.findById(myId,{ followers: 1, following: 1 }).populate('following').populate('followers').then(data => {
                 resolve(data)
             }).catch(err => reject(err))
         })

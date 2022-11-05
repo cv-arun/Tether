@@ -5,6 +5,8 @@ import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
+import { useSelector, useDispatch } from 'react-redux';
+import { openReducer } from '../redux/feedSlice'
 
 
 
@@ -24,22 +26,20 @@ const style = {
 };
 
 
-export default function NestedModal(props) {
-  const [open, setOpen] = React.useState(false);
+export default function NestedModal() {
+  // const [open, setOpen] = React.useState(false);
+  const open = useSelector(state => state.openModal.openModal);
+  const dispatch = useDispatch()
   const handleClose = () => {
-    setOpen(false);
+    dispatch(openReducer(false))
+
   };
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  React.useEffect(() => {
-    setOpen(true)
-  }, [props])
+
 
   return (
     <div>
-      <Button onClick={handleOpen}></Button>
+      <Button ></Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -65,14 +65,14 @@ export default function NestedModal(props) {
 
             </div>
             <div className='flex flex-col  justify-between  h-[220px]'>
-             
+
               <textarea placeholder='Whats on your Mind?' className='border-0 w-full mr-5 p-4 scrollbar-hide focus-visible:outline-none' ></textarea>
               <div className='mb-3'>
                 <div className='w-full my-3 h-[60px] rounded-md shadow-md ring-2 ring-slate-200 flex items-center justify-between px-4'>
                   <p>Add to your Post</p>
 
-                  <Button><input id='choose-file' style={{display:'none'}} type={'file'}/>
-                  <label htmlFor="choose-file"><AddPhotoAlternateIcon /></label></Button>
+                  <Button><input id='choose-file' style={{ display: 'none' }} type={'file'} />
+                    <label htmlFor="choose-file"><AddPhotoAlternateIcon /></label></Button>
                   <Button> <AddReactionIcon /></Button>
 
                 </div>
