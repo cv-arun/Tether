@@ -6,6 +6,8 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      'sans': ['ui-sans-serif', 'system-ui']}
   },
   plugins: [require('tailwind-scrollbar-hide')],
 }

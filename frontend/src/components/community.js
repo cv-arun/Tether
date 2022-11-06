@@ -21,36 +21,41 @@ function Community() {
         });
 
         tabs !== 3 && getFollow().then(data => {
-            console.log(data)
+            console.log(data,'data')
             setfollowers(data.followers)
             setfollowing(data.following)
         });
 
-
-
-
     }, [tabs])
     const handleClick = (e) => {
+       
+        e.target.id !=='' && e.target.innerText === 'FOLLOWING'?
+         requestUnFollow(e.target.id).then(data => {
+            e.target.style.opacity ='100%'
+            e.target.innerText='FOLLOW';                    
+        }):requestFollow(e.target.id).then(data => {
+            e.target.style.opacity ='70%'
+            e.target.innerText='FOLLOWING'
+        })
 
-        e.target.innerText = e.target.id !== '' ? 'FOLLOWING' : e.target.innerText;
-        e.target.style.opacity = e.target.id !== '' ? '50%' : '';
-        e.target.id !== '' ? e.target.style.opacity === '50%' ?
-        requestUnFollow(e.target.id).then(data => {
-                console.log(data, 'follow request')
-            }) : requestFollow(e.target.id).then(data => {
-                console.log(data, 'follow request')
-            }) : e.target.style.opacity = '';
+
     }
     const handleClick2 = (e) => {
-       
-        e.target.id !=='' && requestUnFollow(e.target.id).then(data => {
-            console.log(data)
+
+        console.log( e.target)
+        e.target.id !== '' && e.target.innerText === 'FOLLOWING'?
+         requestUnFollow(e.target.id).then(data => {
+            e.target.style.opacity ='80%'
+            e.target.innerText='FOLLOW';                    
+        }):requestFollow(e.target.id).then(data => {
+            e.target.style.opacity ='100%'
+            e.target.innerText='FOLLOWING'
         })
 
     }
     return (
         <>
-            <div className="flex flex-col justify-center mx-auto md:max-w-[690px] w-full  rounded-lg gap-2">
+            <div className="flex flex-col justify-center mx-auto md:max-w-[690px] w-full  rounded-lg gap-2 ">
                 <div className='flex h-16 bg-white'>
                     <button onClick={() => setTabs(1)} className='w-1/3 text-center md:text-2xl  text-sm py-4 focus:border-2 focus:border-b-blue-500'>
                         Followers
@@ -68,7 +73,7 @@ function Community() {
                         return <div key={index} className='bg-white shadow-lg w-[150px] md:w-[180px] mx-auto flex flex-col gap-3 h-fit p-2'>
                             <img src='https://www.zimlive.com/dating/wp-content/themes/gwangi/assets/images/avatars/user-avatar.png' alt='profile' />
                             <p className='px-1'>Name</p>
-                            <div className='px-1'><Button className='w-full' variant="contained">Following</Button></div>
+                            <div className='px-1'><Button className='w-full' variant="contained">Remove</Button></div>
                         </div>
                     })}
 

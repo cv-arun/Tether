@@ -1,20 +1,21 @@
-import { Fragment, useRef, useState, useEffect } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
+import { Fragment, useRef } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import { openReducer } from '../redux/notificationSlice';
+import {useSelector,useDispatch} from 'react-redux';
 
 
 
 export default function Modal2(props) {
-    const [open, setOpen] = useState(true)
-    useEffect(() => {
-        setOpen(!open)
-    }, [props.open])
+    const notification=useSelector(state=>state.openNotification.openModal);
+    const dispatch=useDispatch()
+
 
     const cancelButtonRef = useRef(null)
 
     return (
-        <Transition.Root show={open} as={Fragment}>
-            
-            <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
+        <Transition.Root show={notification} as={Fragment}>
+
+            <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={dispatch(openReducer(false))}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -25,7 +26,7 @@ export default function Modal2(props) {
                     leaveTo="opacity-0"
                 >
                     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-                    
+
                 </Transition.Child>
 
                 <div className="fixed inset-0 z-10 overflow-y-auto" >
@@ -41,7 +42,7 @@ export default function Modal2(props) {
                         >
                             <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all my-8 w-full max-w-lg">
                                 <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4"></div>
-                               <p>hello</p>
+                                <p>hello</p>
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>

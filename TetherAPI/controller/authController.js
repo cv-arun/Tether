@@ -39,6 +39,6 @@ module.exports = {
     updateUser:(req,res,next)=>{
         authhelper.doUpdateUser(req.body).then(response=>{
             res.json({msg:'user data updated'})
-        })
+        }).catch(err=>res.json(err))
     }
 }

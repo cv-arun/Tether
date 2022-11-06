@@ -26,6 +26,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -94,10 +95,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Sidebar(props) {
-    React.useEffect(() => {
-        var s=window.screen.availWidth
-        console.log(s)
-    },[window.screen.availWidth])
+
+   
     const navigate = useNavigate()
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -150,7 +149,7 @@ export default function Sidebar(props) {
     { label: 'Logout', icon: <LogoutIcon /> }]
 
     return (
-        <Box sx={{ display: 'flex', backgroundColor: '#f0f2f5' }}>
+        <Box sx={{ display: 'flex', backgroundColor: '#f0f2f5', minHeight:'100vh' }}>
             <CssBaseline />
             <AppBar position="fixed" open={open}>
                 <Toolbar>
