@@ -1,9 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export const notificationSlice = createSlice({
+export const openModal2 = createSlice({
     name: 'Notification',
     initialState: {
-        openModal: false
+        openModal:{
+            open:false,
+            component:<p>hello</p>
+        }
     },
     reducers: {
         openReducer: (state,action) => {
@@ -15,6 +18,6 @@ export const notificationSlice = createSlice({
 })
 
 
-export const { openReducer} = notificationSlice.actions
+export const { openReducer} = openModal2.actions
 
-export default notificationSlice.reducer
+export default openModal2.reducer

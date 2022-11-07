@@ -1,10 +1,11 @@
 import React from 'react';
 import Sidebar from '../layout/sidebar';
+import Settings from '../components/settings';
 
-function Settings() {
+function SettingsPage() {
   return (
-  <Sidebar/>
+  <Sidebar component={<Settings/>}/>
   )
 }
 
-export default Settings
+export default SettingsPage

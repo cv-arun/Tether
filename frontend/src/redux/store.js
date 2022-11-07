@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import feedReducer from './feedSlice';
-import notificationReducer from './notificationSlice';
+import openModal2 from './modal2';
 
 export default configureStore({
   reducer: {
     openModal: feedReducer,
-    openNotification:notificationReducer
+    openModal2
   }
 })
