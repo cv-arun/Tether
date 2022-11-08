@@ -152,11 +152,11 @@ export default function Sidebar(props) {
     { label: 'Logout', icon: <LogoutIcon /> }]
 
     return (
-        <Box sx={{ display: 'flex', backgroundColor: '#f0f2f5', minHeight: '100vh' }}>
+        <Box sx={{ display: 'flex', backgroundColor: '#f0f2f5', minHeight: '100vh', minWidth: '100vw' }}>
             <CssBaseline />
             <AppBar position="fixed" open={open}>
                 <Toolbar>
-                    <IconButton
+                   {!isMob && <IconButton
                         color="inherit"
                         aria-label="open drawer"
                         onClick={handleDrawerOpen}
@@ -167,13 +167,12 @@ export default function Sidebar(props) {
                         }}
                     >
                         <MenuIcon />
-                    </IconButton>
+                    </IconButton>}
                     <Typography variant="h6" noWrap component="div">
                         Tether
                     </Typography>
                 </Toolbar>
             </AppBar>
-
             {!isMob && <Drawer variant="permanent" open={open}>
                 <DrawerHeader>
                     <IconButton onClick={handleDrawerClose}>
@@ -213,25 +212,16 @@ export default function Sidebar(props) {
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
                 <div>{props.component ? props.component : <p>Empty page</p>}</div>
-
             </Box>
 
-
-            <AppBar position="fixed" sx={{ marginTop: '90vh', height: '10vh', backgroundColor: 'gray',maxWidth:'100vw',marginX:'0' }}>
-                <Toolbar sx={{maxWidth:'100%',display: 'flex'}}>
-
-                    {sidebar.map((content, index) => (
-                        <ListItem key={content.label} disablePadding  onClick={(e) => handleClick(content.label)}>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    {content.icon}
-                                </ListItemIcon>
-
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </Toolbar>
-            </AppBar>
+            {isMob && <div className='bg-gray-200 w-[100%] h-14 flex justify-around fixed bottom-0'>
+                {sidebar.map((content, index) => (
+                    <div className='text-gray-600 place-self-center' onClick={(e) => handleClick(content.label)}>
+                        {content.icon}
+                    </div>
+                ))}
+            </div>
+            }
         </Box>
     );
 }
