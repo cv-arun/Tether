@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
+import { useMediaQuery } from 'react-responsive';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -95,8 +96,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Sidebar(props) {
+    const isMob = useMediaQuery({
+        query: '(max-width: 450px)'
+    })
 
-   
     const navigate = useNavigate()
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -149,7 +152,7 @@ export default function Sidebar(props) {
     { label: 'Logout', icon: <LogoutIcon /> }]
 
     return (
-        <Box sx={{ display: 'flex', backgroundColor: '#f0f2f5', minHeight:'100vh' }}>
+        <Box sx={{ display: 'flex', backgroundColor: '#f0f2f5', minHeight: '100vh' }}>
             <CssBaseline />
             <AppBar position="fixed" open={open}>
                 <Toolbar>
@@ -170,7 +173,8 @@ export default function Sidebar(props) {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <Drawer variant="permanent" open={open}>
+
+            {!isMob && <Drawer variant="permanent" open={open}>
                 <DrawerHeader>
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -205,11 +209,29 @@ export default function Sidebar(props) {
                 </List>
                 <Divider />
 
-            </Drawer>
+            </Drawer>}
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
                 <div>{props.component ? props.component : <p>Empty page</p>}</div>
+
             </Box>
+
+
+            <AppBar position="fixed" sx={{ marginTop: '90vh', height: '10vh', backgroundColor: 'gray',maxWidth:'100vw',marginX:'0' }}>
+                <Toolbar sx={{maxWidth:'100%',display: 'flex'}}>
+
+                    {sidebar.map((content, index) => (
+                        <ListItem key={content.label} disablePadding  onClick={(e) => handleClick(content.label)}>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    {content.icon}
+                                </ListItemIcon>
+
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
+                </Toolbar>
+            </AppBar>
         </Box>
     );
 }
