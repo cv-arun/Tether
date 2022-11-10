@@ -3,9 +3,11 @@ const  env=require('dotenv').config();
 const logger = require('morgan');
 const createError = require('http-errors');
 const mongoose = require("mongoose");
-const cors = require("cors")
+const cors = require("cors");
+const fileupload=require('express-fileupload')
 
-const userRouter=require('./router/user')
+const userRouter=require('./router/user');
+const postRouter=require('./router/post')
 
 const app = express();
 
@@ -21,8 +23,12 @@ mongoose.connect(process.env.mongoURL).then((res) => {
   console.log("mongodb connected")
 })
 
+app.use(fileupload({
+  useTempFiles:true
+}))
 
 app.use('/',userRouter)
+app.use('/post',postRouter)
 
 
 

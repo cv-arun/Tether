@@ -5,11 +5,6 @@ import Post from './post';
 
 function feed() {
   return (
-
-
-
-
-
     <div className="flex flex-col justify-center mx-auto md:max-w-[690px] w-full z-10 ">
       <StoriesThumbnails />
       <CreatePost />

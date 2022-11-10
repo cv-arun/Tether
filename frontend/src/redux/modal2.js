@@ -5,7 +5,7 @@ export const openModal2 = createSlice({
     initialState: {
         openModal:{
             open:false,
-            component:<p>hello</p>
+            component:<>hello</>
         }
     },
     reducers: {

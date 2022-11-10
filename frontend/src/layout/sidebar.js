@@ -25,7 +25,8 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
-
+import { userReducer } from '../redux/userSlice';
+import { useDispatch } from 'react-redux'
 
 
 const drawerWidth = 240;
@@ -100,6 +101,10 @@ export default function Sidebar(props) {
         query: '(max-width: 450px)'
     })
 
+    const dispatch = useDispatch()
+    React.useEffect(() => {
+        dispatch(userReducer())
+    },[])
     const navigate = useNavigate()
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -132,7 +137,7 @@ export default function Sidebar(props) {
                 navigate('/settings')
                 break;
             case 'Logout':
-                localStorage.removeItem('userKey')
+                localStorage.clear()
                 navigate('/login')
                 break;
             default:
@@ -156,7 +161,7 @@ export default function Sidebar(props) {
             <CssBaseline />
             <AppBar position="fixed" open={open}>
                 <Toolbar>
-                   {!isMob && <IconButton
+                    {!isMob && <IconButton
                         color="inherit"
                         aria-label="open drawer"
                         onClick={handleDrawerOpen}

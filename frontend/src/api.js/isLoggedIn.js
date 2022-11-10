@@ -1,11 +1,11 @@
 import axios from './axios'
 
-const getPeople = () => {
+const isLoggedIn = () => {
     let token=JSON.parse(localStorage.getItem('userKey'))
   
     return new Promise((resolve, rejecct) => {
         
-        axios.get('/getPeople', { headers: { 'x-access-token': token } }).then(data=>{
+        axios.get('/is_logged_in', { headers: { 'x-access-token': token } }).then(data=>{
             
             resolve(data.data)
         }).catch(err=>rejecct(err))
@@ -14,4 +14,4 @@ const getPeople = () => {
 
 
 
-export default getPeople
+export default isLoggedIn

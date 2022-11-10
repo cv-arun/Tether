@@ -1,15 +1,19 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Sidebar from '../layout/sidebar';
 import Feed from '../components/feed';
-
-
-function feed() {
+import { userReducer } from '../redux/userSlice';
+import { useDispatch } from 'react-redux'
+function FeedPage() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(userReducer())
+  },[])
   return (
     <>
-   <Sidebar component={<Feed/>}/>
+      <Sidebar component={<Feed />} />
     </>
   )
 }
 
-export default feed
+export default FeedPage

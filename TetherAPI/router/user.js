@@ -9,6 +9,7 @@ router.post('/signup',auth.signup);
 router.post('/login',auth.login);
 router.post('/loginGoogle',auth.loginWithGoogle);
 router.post('/updateUser',auth.updateUser)
+router.get('/is_logged_in',auth.is_logged_in)
 
 
 router.get('/getPeople',verify,userController.getPeople)

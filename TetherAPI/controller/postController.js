@@ -1,0 +1,77 @@
+require('dotenv').config()
+const postHelper = require('../helper/postHelper')
+
+const cloudinary = require("cloudinary");
+const fs = require("fs");
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
+
+
+exports.getPost = (req, res, next) => {
+
+  postHelper.getAllPost().then(data => {
+    res.json(data)
+  }).catch(err => res.json(err))
+
+}
+
+
+
+
+
+
+
+
+
+
+
+exports.uploadImages = async (req, res) => {
+  try {
+    let { profile, caption,privacy } = req.body
+    let path = `${req.userId}/images`
+    let files = req.files ? Object.values(req.files).flat() : null;
+    let images = [];
+    if (files) {
+      for (const file of files) {
+        const url = await uploadToCouldinary(file, path);
+        images.push(url);
+        removeTmp(file.tempFilePath)
+      }
+  
+    }
+    postHelper.updataPostDetails(profile, caption, images, req.userId,privacy).then(data => res.json({ msg: 'db updated' }))
+  
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+const uploadToCouldinary = (file, path) => {
+  return new Promise((resolve) => {
+    cloudinary.v2.uploader.upload(
+      file.tempFilePath, {
+      folder: path
+    }, (err, res) => {
+      if (err) {
+        removeTmp(file.tempFilePath)
+        res.status(400).json({ messge: "image upload failed" })
+      }
+      resolve({
+        url: res.secure_url
+      })
+    }
+    )
+  })
+}
+
+
+const removeTmp = (path) => {
+  fs.unlink(path, (err) => {
+    if (err) throw err;
+  });
+};
+
+

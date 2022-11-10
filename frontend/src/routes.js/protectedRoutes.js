@@ -8,6 +8,7 @@ import Notification from '../pages/notification';
 import Profile from '../pages/profile';
 import Settings from '../pages/settings';
 import Chat from '../pages/chat';
+import isLoggedIn from '../api.js/isLoggedIn';
 
 
 
@@ -15,7 +16,10 @@ function ProtectedRoutes() {
     const navigate=useNavigate()
     useEffect(()=>{
         let token=localStorage.getItem('userKey');
-        !token && navigate('/login')
+        !token?navigate('/login'):isLoggedIn().then(data=>{
+            console.log(data,'log data')
+            !data.loggedIn && navigate('/login')
+        })
         
     },[])
 

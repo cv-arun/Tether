@@ -18,7 +18,7 @@ function Community() {
         tabs === 3 && getPeople().then(data => {
             console.log(data, "pople you may know")
             setPeople(data)
-        });
+        }).catch(err=>{console.log(err,'errrrrrrr')});
 
         tabs !== 3 && getFollow().then(data => {
             console.log(data,'data')

@@ -6,7 +6,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import { useSelector, useDispatch } from 'react-redux';
-import { openReducer } from '../redux/feedSlice'
+import { openReducer } from '../redux/feedSlice';
+import EmojiPicker from 'emoji-picker-react';
+import createPost from '../api.js/postImage';
+import dataURItoBlob from '../helper.js/blob';
+import { Bars } from 'react-loader-spinner'
+
+
 
 
 
@@ -27,14 +33,67 @@ const style = {
 
 
 export default function NestedModal() {
-  // const [open, setOpen] = React.useState(false);
+  const [show, setShow] = React.useState(false);
+  const [text, setText] = React.useState('');
+  const [images, setImages] = React.useState([]);
+  const [validate, setValidate] = React.useState(false)
+  const [spinner, setSpinner] = React.useState(false)
+  const [privacy,setPrivacy]=React.useState('followers')
+  const postCaption = React.useRef();
   const open = useSelector(state => state.openModal.openModal);
   const dispatch = useDispatch()
   const handleClose = () => {
     dispatch(openReducer(false))
-
   };
 
+  React.useEffect(() => {
+    images.length > 0 || text !== '' ? setValidate(true) : setValidate(false)
+  }, [text, images])
+
+
+  const imojiClicked = ({ emoji }) => {
+    let ref = postCaption.current;
+    let start = text.substring(0, ref.selectionStart)
+    let end = text.substring(ref.selectionEnd)
+    setText(start + emoji + end)
+    setShow(false)
+   
+  }
+
+  function fileUploaded(e) {
+
+    const files = Array.from(e.target.files);
+    files.forEach((img) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(img);
+      reader.onload = (readerEvent) => {
+        setImages((images) => [...images, readerEvent.target.result]);
+      };
+    });
+
+  }
+
+  const submitPost = () => {
+    setSpinner(true)
+    let img = images.map(img => {
+      return dataURItoBlob(img)
+    })
+    console.log(img, 'img')
+    let form = new FormData();
+    img.forEach((img) => {
+      form.append('file', img)
+    })
+    form.append('caption', text)
+    form.append('privacy', privacy)
+
+
+    createPost(form).then(data => {
+      console.log(data.data, 'db updated');
+      setImages([])
+      setText('')
+      setSpinner(false)
+    })
+  }
 
 
   return (
@@ -46,40 +105,63 @@ export default function NestedModal() {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
+
         <Box sx={{ ...style, width: 400 }}>
-          <div className='h-80 bg-white'>
+          {show && <div className='fixed z-50 xl:-translate-x-[120%]'>
+            <EmojiPicker onEmojiClick={imojiClicked} />
+          </div>}
+          <div className='h-80 bg-white '>
             <div className='flex '><h2 className='text-2xl text-right w-4/6'>Create Post</h2>
               <span className='w-2/6 flex flex-row-reverse'><CloseIcon onClick={handleClose} /></span></div>
             <hr />
-            <div className='flex mt-2'>
+            <div className='flex mt-2' onSelect={(e) => e.target.selectionStart}>
 
               <img className=' max-h-12 my-auto' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkSQpuRwKcQD_-_2yf6EGsw56SsFVa4jdKaQ&usqp=CAU' alt='profile' />
 
               <div className='m-3'>
                 <h3 className='m-1 text-lg '>Name</h3>
-                <select className='bottom-2 rounded-sm border-gray-400 hover:text-lg'>
-                  <option>Friends</option>
-                  <option >Public</option>
+                <select className='bottom-2 rounded-sm border-gray-400 ' onChange={(e)=>setPrivacy(e.target.value)}>
+                  <option value={'followers'}>Followers</option>
+                  <option value={'public'}>Public</option>
                 </select>
               </div>
 
             </div>
             <div className='flex flex-col  justify-between  h-[220px]'>
 
-              <textarea placeholder='Whats on your Mind?' className='border-0 w-full mr-5 p-4 scrollbar-hide focus-visible:outline-none' ></textarea>
-              <div className='mb-3'>
-                <div className='w-full my-3 h-[60px] rounded-md shadow-md ring-2 ring-slate-200 flex items-center justify-between px-4'>
+              <textarea placeholder='Whats on your Mind?' className='border-0 w-full mr-5 p-4 scrollbar-hide focus-visible:outline-none' ref={postCaption} value={text} onChange={(e) => setText(e.target.value)} >
+              </textarea>
+              <div className='flex justify-around h-12 overflow-y-auto scrollbar-hide'>
+                {images && images.map((img, i) => (
+                  <img className='max-h-[100%] active:scale-100 active:fixed active:z-50 active:-translate-y-20' src={img} key={i} alt="" />
+                ))}
+              </div>
+              <div className='mb-2'>
+                <div className='w-full my-3 h-[30px] rounded-md shadow-md ring-2 ring-slate-200 flex items-center justify-between px-4'>
                   <p>Add to your Post</p>
 
-                  <Button><input id='choose-file' style={{ display: 'none' }} type={'file'} />
+                  <Button><input id='choose-file' accept='image/jpeg,image/png,image/webp,image/gif' multiple style={{ display: 'none' }} type={'file'} onChange={fileUploaded} />
                     <label htmlFor="choose-file"><AddPhotoAlternateIcon /></label></Button>
-                  <Button> <AddReactionIcon /></Button>
+                  <Button onClick={() => setShow(!show)}> <AddReactionIcon /></Button>
+
 
                 </div>
-                <Button variant='contained' sx={{ width: '100%' }}>Post</Button>
+
+                {validate ? <Button variant='contained' sx={{ width: '100%' }} onClick={submitPost}>{!spinner?'POST':<Bars
+                  height="30"
+                  width="50"
+                  color="#4fa94d"
+                  ariaLabel="bars-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  visible={true}
+                />}</Button> :
+                  <Button variant='contained' disabled sx={{ width: '100%' }} onClick={submitPost}>Post</Button>
+                }
               </div>
 
             </div>
+
           </div>
 
 

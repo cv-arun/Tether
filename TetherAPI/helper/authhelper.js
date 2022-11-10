@@ -7,10 +7,10 @@ const authHelper = {
 
     doSignup: (userData) => {
         return new Promise(async (resolve, reject) => {
-            console.log(userData,'userData')
+
             let user = await userModel.findOne({ email: userData.email })
             if (!user) {
-                userData.password =userData.password? await bcrypt.hash(userData.password, 10):null
+                userData.password = userData.password ? await bcrypt.hash(userData.password, 10) : null
 
                 userModel.create({
                     email: userData.email,
@@ -23,18 +23,22 @@ const authHelper = {
 
                 }
                 ).then((response) => {
+                    console.log(response, 'response')
                     const user = {
                         userId: response._id,
-                        email: response.email
+                        name: response.first_name,
+                        picture: response.picture
                     }
 
-                    console.log(user)
+                    console.log(user, 'user')
                     resolve(user)
                 }).catch(err => reject(err))
             } else {
                 resolve({
                     msg: 'User Alredy Exist',
-                    userId:user._id
+                    userId: user._id,
+                    name: user.first_name,
+                    picture: user.picture
                 })
             }
 
@@ -54,14 +58,18 @@ const authHelper = {
                         if (res) {
 
                             const user = {
-
+                                user: {
+                                    userId: userData._id,
+                                    name: userData.first_name,
+                                    picture: userData.picture
+                                }
                             }
                             user.token = generateToken({
                                 userId: userData._id,
                                 email: userData.email
                             }, "2h")
 
-                            console.log(user)
+
                             resolve(user)
 
                         } else {

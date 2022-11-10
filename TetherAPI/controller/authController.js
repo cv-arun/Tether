@@ -6,7 +6,8 @@ module.exports = {
     signup: (req, res, next) => {
       
         authhelper.doSignup(req.body).then((response) => {
-            res.json( response )
+            !response.msg?res.json( response ):res.json({msg:'User already exist'})
+            
         }).catch(err=>res.json(err))
     },
     login:(req,res,next)=>{
@@ -23,16 +24,16 @@ module.exports = {
     loginWithGoogle:(req,res,next)=>{
     
         const decoded = jwt_decode(req.body.credentialResponse.credential);
-        let user={
+        let userDetails={
             fname:decoded.given_name,
             lname:decoded.family_name,
             email:decoded.email,
             picture:decoded.picture
         }
-        authhelper.doSignup(user).then((response)=>{
+        authhelper.doSignup(userDetails).then((user)=>{
            
-           let token= generateToken(response,'2h')
-           res.json({token})
+           let token= generateToken(user,'2h')
+           res.json({token,user})
             
         }).catch(err=>res.json(err))
     },
@@ -40,5 +41,8 @@ module.exports = {
         authhelper.doUpdateUser(req.body).then(response=>{
             res.json({msg:'user data updated'})
         }).catch(err=>res.json(err))
+    },
+    is_logged_in:(req,res,next)=>{
+     res.json({loggedIn:'loggedIn'})
     }
 }
