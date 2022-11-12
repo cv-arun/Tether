@@ -12,7 +12,36 @@ cloudinary.config({
 
 exports.getPost = (req, res, next) => {
 
-  postHelper.getAllPost().then(data => {
+
+  postHelper.getAllPost(req.userId).then(data => {
+    res.json(data)
+  }).catch(err => res.json(err))
+
+}
+exports.getMyPost = (req, res, next) => {
+
+  postHelper.getAllPost(req.userId,true).then(data => {
+    res.json(data)
+  }).catch(err => res.json(err))
+
+}
+exports.hitLike = (req, res, next) => {
+
+  postHelper.hitLike(req.userId,req.body.postId).then(data => {
+    res.json(data)
+  }).catch(err => res.json(err))
+
+}
+exports.addCommnent = (req, res, next) => {
+
+  postHelper.addCommnent(req.userId,req.body.postId,req.body.text).then(data => {
+    res.json(data)
+  }).catch(err => res.json(err))
+
+}
+exports.removeCommenent = (req, res, next) => {
+
+  postHelper.removeCommenent(req.body.postId,req.body.commentId).then(data => {
     res.json(data)
   }).catch(err => res.json(err))
 

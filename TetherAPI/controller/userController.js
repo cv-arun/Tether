@@ -19,7 +19,6 @@ module.exports = {
        
         userHelper.doUnFollow(req.userId,req.body.friendId).then(data=>{
             res.json(data)
-
         }).catch(err=>res.json(err))
 
     },

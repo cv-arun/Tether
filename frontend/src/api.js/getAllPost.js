@@ -1,13 +1,17 @@
 import axios from './axios'
 
-const getPost = () => {
-    let token=JSON.parse(localStorage.getItem('userKey'))
-  
+const getPost = (myPost) => {
+    let token = JSON.parse(localStorage.getItem('userKey'))
+
     return new Promise((resolve, rejecct) => {
-        
-        axios.get('/post/get-post', { headers: { 'x-access-token': token } }).then(data=>{
+
+        myPost ? axios.get('/post/getMyPost', { headers: { 'x-access-token': token } }).then(data => {
             resolve(data.data)
-        }).catch(err=>rejecct(err))
+        }).catch(err => rejecct(err)) :
+            axios.get('/post/getPost', { headers: { 'x-access-token': token } }).then(data => {
+                resolve(data.data)
+            }).catch(err => rejecct(err))
+
     })
 }
 

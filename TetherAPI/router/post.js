@@ -5,8 +5,11 @@ const postController=require('../controller/postController')
 
 
 router.post('/create-post',verify,postController.uploadImages)
-router.get('/get-post',verify,postController.getPost)
-
+router.get('/getPost',verify,postController.getPost)
+router.get('/getMyPost',verify,postController.getMyPost)
+router.post('/hitLike',verify,postController.hitLike)
+router.post('/sendCommnet',verify,postController.addCommnent)
+router.post('/removeCommenent',verify,postController.removeCommenent)
 
 
 

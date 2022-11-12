@@ -19,7 +19,7 @@ function ProtectedRoutes() {
         !token?navigate('/login'):isLoggedIn().then(data=>{
             console.log(data,'log data')
             !data.loggedIn && navigate('/login')
-        })
+        }).catch(err=>navigate('/login'))
         
     },[])
 

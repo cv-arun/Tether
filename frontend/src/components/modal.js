@@ -10,7 +10,9 @@ import { openReducer } from '../redux/feedSlice';
 import EmojiPicker from 'emoji-picker-react';
 import createPost from '../api.js/postImage';
 import dataURItoBlob from '../helper.js/blob';
-import { Bars } from 'react-loader-spinner'
+import { Bars } from 'react-loader-spinner';
+import {refreshReducer} from '../redux/refreshSLice';
+
 
 
 
@@ -92,6 +94,7 @@ export default function NestedModal() {
       setImages([])
       setText('')
       setSpinner(false)
+      dispatch(refreshReducer())
     })
   }
 
@@ -156,7 +159,7 @@ export default function NestedModal() {
                   wrapperClass=""
                   visible={true}
                 />}</Button> :
-                  <Button variant='contained' disabled sx={{ width: '100%' }} onClick={submitPost}>Post</Button>
+                  <Button variant='contained' disabled sx={{ width: '100%' }} >Post</Button>
                 }
               </div>
 

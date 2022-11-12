@@ -10,7 +10,7 @@ import requestUnFollow from '../api.js/requestUnFollow';
 
 
 function Community() {
-    const [tabs, setTabs] = useState(1);
+    const [tabs, setTabs] = useState(3);
     const [people, setPeople] = useState([])
     const [followers, setfollowers] = useState([])
     const [following, setfollowing] = useState([])
@@ -76,6 +76,7 @@ function Community() {
                             <div className='px-1'><Button className='w-full' variant="contained">Remove</Button></div>
                         </div>
                     })}
+                    {followers.length===0 &&<p className='mx-auto mt-[30vh]'>you dont have any followers</p>}
 
 
                 </div>}
@@ -87,6 +88,7 @@ function Community() {
                             <div className='px-1'><Button id={`${curr._id}`} className='w-full' variant="contained">Following</Button></div>
                         </div>
                     })}
+                    {following.length===0 && <Button onClick={() => setTabs(3)} sx={{marginX:'auto',marginTop:'30vh'}} >Find people you may know</Button>}
                 </div>}
                 {tabs === 3 && <div className='flex flex-wrap gap-4' onClick={handleClick}>
                     {people.map((curr, index) => {
