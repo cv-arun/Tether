@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export const refresh = createSlice({
-    name: 'Notification',
+    name: 'refresh',
     initialState: {
         refresh:false
     },

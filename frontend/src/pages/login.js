@@ -10,7 +10,7 @@ import { GoogleLogin } from '@react-oauth/google';
 
 
 
- function Login() {
+function Login() {
 
 
 
@@ -30,9 +30,9 @@ import { GoogleLogin } from '@react-oauth/google';
     const handleSubmit = () => {
         axios.post('/login', data).then(response => {
             console.log(response.data)
-            response && localStorage.setItem('userKey', JSON.stringify(response.data.token))
-            response && localStorage.setItem('Tether', JSON.stringify(response.data.user))
-            response && response.data.token && navigate('/')
+            response.data?.token && localStorage.setItem('userKey', JSON.stringify(response.data.token))
+            response.data?.user && localStorage.setItem('Tether', JSON.stringify(response.data.user))
+            response.data?.token && navigate('/')
             response.data.msg ? setMsg(response.data.msg) : setMsg('')
         }).catch(err => console.log(err))
     }

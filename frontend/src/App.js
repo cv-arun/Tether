@@ -16,8 +16,8 @@ function App() {
     <GoogleOAuthProvider clientId={`${process.env.REACT_APP_google_client_id}`} >
       <Provider store={store}>
 
-        <ProtectedRoutes />
         <UnprotectedRoutes />
+        <ProtectedRoutes />
       </Provider>
     </GoogleOAuthProvider>
   );

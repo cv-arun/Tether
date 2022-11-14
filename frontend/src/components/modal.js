@@ -90,7 +90,6 @@ export default function NestedModal() {
 
 
     createPost(form).then(data => {
-      console.log(data.data, 'db updated');
       setImages([])
       setText('')
       setSpinner(false)

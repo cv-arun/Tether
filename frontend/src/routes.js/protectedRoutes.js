@@ -1,5 +1,5 @@
-import React,{useEffect} from 'react'
-import { Routes, Route,useNavigate } from "react-router-dom";
+import React, { useEffect } from 'react'
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import Home from '../pages/home';
 import Feed from '../pages/feedPage';
@@ -9,19 +9,19 @@ import Profile from '../pages/profile';
 import Settings from '../pages/settings';
 import Chat from '../pages/chat';
 import isLoggedIn from '../api.js/isLoggedIn';
+import io from "socket.io-client";
 
 
 
 function ProtectedRoutes() {
-    const navigate=useNavigate()
-    useEffect(()=>{
-        let token=localStorage.getItem('userKey');
-        !token?navigate('/login'):isLoggedIn().then(data=>{
-            console.log(data,'log data')
+    const socket = io.connect("http://localhost:5000")
+    const navigate = useNavigate()
+    useEffect(() => {
+        let token = JSON.parse(localStorage.getItem('userKey'));
+        !token ? navigate('/login') : isLoggedIn().then(data => {
             !data.loggedIn && navigate('/login')
-        }).catch(err=>navigate('/login'))
-        
-    },[])
+        }).catch(err => navigate('/login'))
+    }, [navigate])
 
     return (
         <>

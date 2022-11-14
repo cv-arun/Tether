@@ -1,10 +1,11 @@
 import React from 'react';
 import Sidebar from '../layout/sidebar';
+import Chats from '../components/chat';
 
-function chat() {
+function Chat() {
   return (
-  <Sidebar />
+  <Sidebar component={<Chats/>} />
   )
 }
 
-export default chat
+export default Chat

@@ -3,12 +3,14 @@ import feedReducer from './feedSlice';
 import openModal2 from './modal2';
 import userSlice from './userSlice';
 import refreshSLice from './refreshSLice';
+import getChatSlice from './getChatSlice';
 
 export default configureStore({
   reducer: {
     openModal: feedReducer,
     openModal2,
     userReducer:userSlice,
-    refresh:refreshSLice
+    refresh:refreshSLice,
+    getChat:getChatSlice
   }
 })

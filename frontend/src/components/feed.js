@@ -3,7 +3,8 @@ import StoriesThumbnails from './storiesThumbnails';
 import CreatePost from './createPost';
 import Post from './post';
 import getPost from '../api.js/getAllPost';
-import {useSelector} from 'react-redux'
+import {useSelector} from 'react-redux';
+
 function Feed() {
   const refresh=useSelector(state=>state.refresh.refresh)
   const [post, setPost] = useState([]);

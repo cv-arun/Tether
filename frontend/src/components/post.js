@@ -15,6 +15,7 @@ import sendCommnet from '../api.js/sendComment';
 import { refreshReducer } from '../redux/refreshSLice';
 import { useDispatch } from 'react-redux';
 import removeCommenent from '../api.js/removeComment';
+import FiberManualRecordOutlinedIcon from '@mui/icons-material/FiberManualRecordOutlined';
 
 
 
@@ -31,6 +32,7 @@ function Post({ curr }) {
         hitLIke(curr._id).then(data => {
             data.msg === 'Liked' && setLiked(true)
             data.msg === 'Unliked' && setLiked(false)
+            dispatch(refreshReducer())
         })
     }
 
@@ -90,7 +92,7 @@ function Post({ curr }) {
                 {curr.images[0] && <div className='m-5 mb-0 overflow-y-auto flex scrollbar-hide'>
                     {curr.images.map((img, i) => (<><img className='min-w-full max-h-[500px]' src={img.url} alt='post' /><p>{i}</p></>))}
                 </div>}
-                {curr.images.length > 1 ? <p className='z-50 mx-auto'>Swipe left</p> : ''}
+                {curr.images.length > 1 ? <span className='flex justify-center'>{curr.images.map(()=><FiberManualRecordOutlinedIcon/>)}</span>: ''}
                 <div >
                     <div className='my-3 mx-5 flex flex-row justify-between z-0'>
                         <p >{curr.Likes?.length} Likes</p>

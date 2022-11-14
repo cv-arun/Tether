@@ -97,6 +97,12 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Sidebar(props) {
+
+    React.useEffect(() => {
+        console.log('loged in')
+        return () => console.log('loged out')
+    }, [])
+
     const isMob = useMediaQuery({
         query: '(max-width: 450px)'
     })
@@ -104,7 +110,7 @@ export default function Sidebar(props) {
     const dispatch = useDispatch()
     React.useEffect(() => {
         dispatch(userReducer())
-    },[])
+    }, [])
     const navigate = useNavigate()
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
