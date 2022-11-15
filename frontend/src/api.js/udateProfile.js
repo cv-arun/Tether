@@ -1,11 +1,12 @@
 import axios from './axios'
 
-const getFollow = (userId) => {
+const updateProfile = (url) => {
     let token=JSON.parse(localStorage.getItem('userKey'))
   
     return new Promise((resolve, rejecct) => {
         
-        axios.post(`/getFollow/`,{userId},{ headers: { 'x-access-token': token } }).then(data=>{
+        axios.post('/updateProfile',{url},{ headers: { 'x-access-token': token } }).then(data=>{
+            
             resolve(data.data)
         }).catch(err=>rejecct(err))
     })
@@ -13,4 +14,4 @@ const getFollow = (userId) => {
 
 
 
-export default getFollow
+export default updateProfile

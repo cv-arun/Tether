@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Routes, Route, useNavigate } from "react-router-dom";
+import React from 'react'
+import { Routes, Route,} from "react-router-dom";
 
 import Home from '../pages/home';
 import Feed from '../pages/feedPage';
@@ -8,21 +8,19 @@ import Notification from '../pages/notification';
 import Profile from '../pages/profile';
 import Settings from '../pages/settings';
 import Chat from '../pages/chat';
-import isLoggedIn from '../api.js/isLoggedIn';
+
 import io from "socket.io-client";
+import {socketReducer} from '../redux/socketSlice';
+import {useDispatch} from 'react-redux'
 
 
 
 function ProtectedRoutes() {
-    const socket = io.connect("http://localhost:5000")
-    const navigate = useNavigate()
-    useEffect(() => {
-        let token = JSON.parse(localStorage.getItem('userKey'));
-        !token ? navigate('/login') : isLoggedIn().then(data => {
-            !data.loggedIn && navigate('/login')
-        }).catch(err => navigate('/login'))
-    }, [navigate])
+    const dispatch=useDispatch();
 
+    const socket = io.connect("http://localhost:5000");
+    dispatch(socketReducer(socket))
+   
     return (
         <>
             <Routes>

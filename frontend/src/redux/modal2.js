@@ -11,6 +11,9 @@ export const openModal2 = createSlice({
     reducers: {
         openReducer: (state,action) => {
             state.openModal = action.payload
+        },
+        closeReducer:(state,action)=>{
+            state.openModal.open=false
         }
 
     }
@@ -18,6 +21,6 @@ export const openModal2 = createSlice({
 })
 
 
-export const { openReducer} = openModal2.actions
+export const { openReducer,closeReducer} = openModal2.actions
 
 export default openModal2.reducer

@@ -10,12 +10,13 @@ import store from './redux/store';
 
 
 
+
+
 function App() {
 
   return (
     <GoogleOAuthProvider clientId={`${process.env.REACT_APP_google_client_id}`} >
       <Provider store={store}>
-
         <UnprotectedRoutes />
         <ProtectedRoutes />
       </Provider>

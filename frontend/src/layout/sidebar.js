@@ -26,7 +26,8 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { userReducer } from '../redux/userSlice';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
+import isLoggedIn from '../api.js/isLoggedIn';
 
 
 const drawerWidth = 240;
@@ -97,10 +98,20 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Sidebar(props) {
-
+    const socket = useSelector(state => state.socket.socket);
+    const user = useSelector((state) => state.userReducer.user)
     React.useEffect(() => {
-        console.log('loged in')
-        return () => console.log('loged out')
+        console.log('loged_in')
+        socket.emit('online', { useId: user.userId })
+        return () => socket.emit('offline', { useId: user.userId })
+    }, [])
+
+   
+    React.useEffect(() => {
+        let token = JSON.parse(localStorage.getItem('userKey'));
+        !token ? navigate('/login') : isLoggedIn().then(data => {
+            !data.loggedIn && navigate('/login')
+        }).catch(err => navigate('/login'))
     }, [])
 
     const isMob = useMediaQuery({

@@ -90,7 +90,7 @@ function Post({ curr }) {
                     <p>{curr.text}</p>
                 </div>
                 {curr.images[0] && <div className='m-5 mb-0 overflow-y-auto flex scrollbar-hide'>
-                    {curr.images.map((img, i) => (<><img className='min-w-full max-h-[500px]' src={img.url} alt='post' /><p>{i}</p></>))}
+                    {curr.images.map((img, i) => (<><img className='min-w-full max-h-[500px]' src={img.url} alt='post' /></>))}
                 </div>}
                 {curr.images.length > 1 ? <span className='flex justify-center'>{curr.images.map(()=><FiberManualRecordOutlinedIcon/>)}</span>: ''}
                 <div >

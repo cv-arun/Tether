@@ -8,7 +8,7 @@ const userHelper = {
                 var user = await userModel.findById(myId)
             } catch { err => reject(err) }
 
-            userModel.find({ _id: { $nin:[...user.following,myId]} }, { password: 0 }).then(data => {
+            userModel.find({ _id: { $nin: [...user.following, myId] } }, { password: 0 }).then(data => {
                 resolve(data)
             }).catch(err => reject(err))
         })
@@ -39,6 +39,42 @@ const userHelper = {
             userModel.findById(myId, { followers: 1, following: 1 }).populate('following').populate('followers').then(data => {
                 resolve(data)
             }).catch(err => reject(err))
+        })
+    },
+    updateProfile: (userId, image) => {
+        image = image[0].url
+        return new Promise(async (resolve, reject) => {
+            try {
+                let data = await userModel.findByIdAndUpdate(userId, { picture: image });
+                resolve(data)
+            } catch (err) {
+                reject(err)
+            }
+        })
+    },
+    changeProfile: (userId, url) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let data = await userModel.findByIdAndUpdate(userId, { picture: url });
+                resolve(data)
+            } catch (err) {
+                reject(err)
+            }
+        })
+    },
+    refreshUSer: (userId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let userData = await userModel.findById(userId)
+               let user= {
+                    userId: userData._id,
+                    name: userData.first_name,
+                    picture: userData.picture
+                }
+                resolve(user)
+            } catch (err) {
+                reject(err)
+            }
         })
     }
 }

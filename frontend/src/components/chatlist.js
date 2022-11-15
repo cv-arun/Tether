@@ -2,19 +2,32 @@ import React, { useEffect, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import getFollow from '../api.js/getFollow';
-import { getChatReducer,openChatBoxReducer } from '../redux/getChatSlice';
+import { getChatReducer, openChatBoxReducer } from '../redux/getChatSlice';
 import { useDispatch } from 'react-redux'
 
 
 function ChatList() {
     const [following, setFollwing] = useState([]);
+    const [data,setData]=useState([])
+    const [search, setSearch] = useState('')
     const dispatch = useDispatch();
     useEffect(() => {
         getFollow().then(data => {
             console.log(data.following, 'follow')
             setFollwing(data.following)
+            setData(data.following)
         })
     }, [])
+
+    useEffect(() => {
+       
+
+      let result=  search !==''?following?.filter((curr) => {
+           return curr.first_name.indexOf(search.toUpperCase())>-1|| curr.first_name.indexOf(search.toLowerCase())>-1
+        }):[...following]
+        setData(result)
+
+    }, [search])
 
     const selectChat = (friendId) => {
         dispatch(getChatReducer(friendId));
@@ -31,12 +44,13 @@ function ChatList() {
                     </div>
 
                     <div className='border-b-2 border-gray-400 bg-white h-10 flex align-middle'>
-                        <input className='w-full ml-3  focus-visible:outline-none' placeholder='Search...' />
+                        <input className='w-full ml-3  focus-visible:outline-none' placeholder='Search...'
+                            value={search} onChange={(e) => setSearch(e.target.value)} />
                         <span className='flex align-middle'><SearchIcon sx={{ marginY: 'auto' }} /></span>
                     </div>
                 </div>
                 <div className='flex flex-col gap-1 overflow-y-auto scrollbar-hide'>
-                    {following.map((curr) => <div className='flex' onClick={() => selectChat(curr._id)}>
+                    {data?.map((curr) => <div className='flex' onClick={() => selectChat(curr._id)}>
                         <div className='md:w-1/6 w-2/6 my-auto'>
                             <img className=' max-h-[100%] rounded-full' src={curr.picture} alt='profile' />
                         </div>

@@ -1,5 +1,6 @@
 require('dotenv').config()
-const postHelper = require('../helper/postHelper')
+const postHelper = require('../helper/postHelper');
+const userHelper = require('../helper/userHelper')
 
 const cloudinary = require("cloudinary");
 const fs = require("fs");
@@ -20,28 +21,28 @@ exports.getPost = (req, res, next) => {
 }
 exports.getMyPost = (req, res, next) => {
 
-  postHelper.getAllPost(req.userId,true).then(data => {
+  postHelper.getAllPost(req.userId, true).then(data => {
     res.json(data)
   }).catch(err => res.json(err))
 
 }
 exports.hitLike = (req, res, next) => {
 
-  postHelper.hitLike(req.userId,req.body.postId).then(data => {
+  postHelper.hitLike(req.userId, req.body.postId).then(data => {
     res.json(data)
   }).catch(err => res.json(err))
 
 }
 exports.addCommnent = (req, res, next) => {
 
-  postHelper.addCommnent(req.userId,req.body.postId,req.body.text).then(data => {
+  postHelper.addCommnent(req.userId, req.body.postId, req.body.text).then(data => {
     res.json(data)
   }).catch(err => res.json(err))
 
 }
 exports.removeCommenent = (req, res, next) => {
 
-  postHelper.removeCommenent(req.body.postId,req.body.commentId).then(data => {
+  postHelper.removeCommenent(req.body.postId, req.body.commentId).then(data => {
     res.json(data)
   }).catch(err => res.json(err))
 
@@ -59,7 +60,7 @@ exports.removeCommenent = (req, res, next) => {
 
 exports.uploadImages = async (req, res) => {
   try {
-    let { profile, caption,privacy } = req.body
+    let { profile, caption, privacy } = req.body
     let path = `${req.userId}/images`
     let files = req.files ? Object.values(req.files).flat() : null;
     let images = [];
@@ -69,10 +70,12 @@ exports.uploadImages = async (req, res) => {
         images.push(url);
         removeTmp(file.tempFilePath)
       }
-  
+
     }
-    postHelper.updataPostDetails(profile, caption, images, req.userId,privacy).then(data => res.json({ msg: 'db updated' }))
-  
+console.log(profile,'profile')
+    profile==true ? userHelper.updateProfile(req.userId, images).then(data => res.json({ msg: 'profile updated' })) :
+      postHelper.updataPostDetails(profile, caption, images, req.userId, privacy).then(data => res.json({ msg: 'db updated' }));
+
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

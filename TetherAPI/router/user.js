@@ -15,7 +15,9 @@ router.get('/is_logged_in',verify,auth.is_logged_in)
 router.get('/getPeople',verify,userController.getPeople)
 router.post('/requestFollow',verify,userController.requestFollow)
 router.post('/requestUnFollow',verify,userController.requestUnFollow)
-router.get('/getFollow',verify,userController.getFollow)
+router.post('/getFollow',verify,userController.getFollow)
+router.post('/updateProfile',verify,userController.changeProfile)
+router.get('/refreshUSer',verify,userController.refreshUser)
 
 
 

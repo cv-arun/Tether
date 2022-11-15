@@ -63,7 +63,7 @@ const userSchema = mongoose.Schema(
       type: ObjectId,
       ref: 'User'
     }],
-    followers:[{
+    followers: [{
       type: ObjectId,
       ref: 'User'
     }],
@@ -124,6 +124,9 @@ const userSchema = mongoose.Schema(
         },
       },
     ],
+    isOnline: Boolean,
+    SocketId: String,
+    lastActive: Date
   },
   {
     timestamps: true,

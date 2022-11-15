@@ -69,29 +69,29 @@ function Community() {
                 </div>
                 <hr />
                 {tabs === 1 && <div className='flex flex-wrap gap-2 '>
-                    {followers.map((curr, index) => {
+                    {followers?.map((curr, index) => {
                         return <div key={index} className='bg-white shadow-lg w-[150px] md:w-[180px] mx-auto flex flex-col gap-3 h-fit p-2'>
                             <img src='https://www.zimlive.com/dating/wp-content/themes/gwangi/assets/images/avatars/user-avatar.png' alt='profile' />
                             <p className='px-1'>Name</p>
                             <div className='px-1'><Button className='w-full' variant="contained">Remove</Button></div>
                         </div>
                     })}
-                    {followers.length===0 &&<p className='mx-auto mt-[30vh]'>you dont have any followers</p>}
+                    {followers?.length===0 &&<p className='mx-auto mt-[30vh]'>you dont have any followers</p>}
 
 
                 </div>}
                 {tabs === 2 && <div className='flex flex-wrap gap-2 ' onClick={handleClick2}>
-                    {following.map((curr, index) => {
+                    {following?.map((curr, index) => {
                         return <div key={index} className='bg-white shadow-lg w-[150px] md:w-[180px] mx-auto flex flex-col gap-3 h-fit p-2'>
                             <img src={curr.picture} alt='profile' />
                             <p className='px-1'>{`${curr.first_name} ${curr.last_name}`}</p>
                             <div className='px-1'><Button id={`${curr._id}`} className='w-full' variant="contained">Following</Button></div>
                         </div>
                     })}
-                    {following.length===0 && <Button onClick={() => setTabs(3)} sx={{marginX:'auto',marginTop:'30vh'}} >Find people you may know</Button>}
+                    {following?.length===0 && <Button onClick={() => setTabs(3)} sx={{marginX:'auto',marginTop:'30vh'}} >Find people you may know</Button>}
                 </div>}
                 {tabs === 3 && <div className='flex flex-wrap gap-4' onClick={handleClick}>
-                    {people.map((curr, index) => {
+                    {people?.map((curr, index) => {
                         return <div key={index} className='bg-white shadow-lg w-[150px] md:w-[180px]  mx-auto flex flex-col gap-2 h-fit p-2'>
                             <img src={curr.picture} alt='profile' />
                             <p className='px-1'>{curr.first_name + ' ' + curr.last_name}</p>

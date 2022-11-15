@@ -87,13 +87,14 @@ export default function NestedModal() {
     })
     form.append('caption', text)
     form.append('privacy', privacy)
-
+    form.append('profile',false)
 
     createPost(form).then(data => {
       setImages([])
       setText('')
       setSpinner(false)
       dispatch(refreshReducer())
+      dispatch(openReducer(false))
     })
   }
 
