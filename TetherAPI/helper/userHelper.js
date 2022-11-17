@@ -62,14 +62,34 @@ const userHelper = {
             }
         })
     },
+    EditProfile: (userId, data) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let result = await userModel
+                    .findByIdAndUpdate(userId,
+                        {
+                            first_name: data.firstName,
+                            last_name: data.lastName,
+                            DOB: data.DOB,
+                            'details.bio': data.bio
+                        });
+                resolve(result)
+            } catch (err) {
+                reject(err)
+            }
+        })
+    },
     refreshUSer: (userId) => {
         return new Promise(async (resolve, reject) => {
             try {
                 let userData = await userModel.findById(userId)
-               let user= {
+                let user = {
                     userId: userData._id,
                     name: userData.first_name,
-                    picture: userData.picture
+                    lastName: userData.last_name,
+                    picture: userData.picture,
+                    bio: userData.details?.bio,
+                    DOB: userData.DOB
                 }
                 resolve(user)
             } catch (err) {

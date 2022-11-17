@@ -38,7 +38,9 @@ const authHelper = {
                     msg: 'User Alredy Exist',
                     userId: user._id,
                     name: user.first_name,
-                    picture: user.picture
+                    picture: user.picture,
+                    lastName:user.last_name,
+                    DOB:user.DOB
                 })
             }
 
@@ -61,7 +63,10 @@ const authHelper = {
                                 user: {
                                     userId: userData._id,
                                     name: userData.first_name,
-                                    picture: userData.picture
+                                    lastName:userData.last_name,
+                                    picture: userData.picture,
+                                    bio:userData.details?.bio,
+                                    DOB:userData.DOB
                                 }
                             }
                             user.token = generateToken({

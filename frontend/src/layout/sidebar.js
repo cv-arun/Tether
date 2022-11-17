@@ -98,15 +98,19 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Sidebar(props) {
-    const socket = useSelector(state => state.socket.socket);
-    const user = useSelector((state) => state.userReducer.user)
     React.useEffect(() => {
-        console.log('loged_in')
-        socket.emit('online', { useId: user.userId })
-        return () => socket.emit('offline', { useId: user.userId })
+        dispatch(userReducer())
     }, [])
 
-   
+    const socket = useSelector(state => state.socket.socket);
+    const user = useSelector((state) => state.userReducer.user);
+    
+    React.useEffect(() => {
+        socket.emit('online', { userId: user.userId })
+        return () => socket.emit('offline', { userId: user.userId })
+    }, [])
+
+
     React.useEffect(() => {
         let token = JSON.parse(localStorage.getItem('userKey'));
         !token ? navigate('/login') : isLoggedIn().then(data => {
@@ -124,7 +128,7 @@ export default function Sidebar(props) {
     }, [])
     const navigate = useNavigate()
     const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -176,7 +180,7 @@ export default function Sidebar(props) {
     return (
         <Box sx={{ display: 'flex', backgroundColor: '#f0f2f5', minHeight: '100vh', minWidth: '100vw' }}>
             <CssBaseline />
-            <AppBar position="fixed" open={open}>
+            <AppBar position="fixed" open={open} sx={{ backgroundColor: 'white', color: 'black',boxShadow:'none' }} >
                 <Toolbar>
                     {!isMob && <IconButton
                         color="inherit"
@@ -191,18 +195,21 @@ export default function Sidebar(props) {
                         <MenuIcon />
                     </IconButton>}
                     <Typography variant="h6" noWrap component="div">
-                        Tether
+                    {open ? '' : 'Tether'}
                     </Typography>
                 </Toolbar>
             </AppBar>
-            {!isMob && <Drawer variant="permanent" open={open}>
-                <DrawerHeader>
+            {!isMob && <Drawer variant="permanent" open={open} >
+                <DrawerHeader sx={{ justifyContent:'space-between' }}>
+                    <Typography variant="h6" noWrap component="div" sx={{flexGrow:'1',textAlign:'center' }}>
+                        Tether
+                    </Typography>
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                     </IconButton>
                 </DrawerHeader>
                 <Divider />
-                <List>
+                <List >
 
                     {sidebar.map((content, index) => (
                         <ListItem key={content.label} disablePadding sx={{ display: 'block' }} onClick={(e) => handleClick(content.label)}>
@@ -218,6 +225,7 @@ export default function Sidebar(props) {
                                         minWidth: 0,
                                         mr: open ? 3 : 'auto',
                                         justifyContent: 'center',
+                                        
                                     }}
                                 >
                                     {content.icon}

@@ -17,6 +17,7 @@ router.post('/requestFollow',verify,userController.requestFollow)
 router.post('/requestUnFollow',verify,userController.requestUnFollow)
 router.post('/getFollow',verify,userController.getFollow)
 router.post('/updateProfile',verify,userController.changeProfile)
+router.post('/updateProfileData',verify,userController.editProfile)
 router.get('/refreshUSer',verify,userController.refreshUser)
 
 

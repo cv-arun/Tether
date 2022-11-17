@@ -6,7 +6,7 @@ const socketServer = (socket) => {
 
     socket.on('online',(data)=>{
         console.log(data,socket.id,'online')
-        chatHelper.registerOnline(data.useId,socket.id).
+        chatHelper.registerOnline(data.userId,socket.id).
         then(data=>console.log(data))
         .catch(err=>console.log(err))
     })
@@ -25,7 +25,7 @@ const socketServer = (socket) => {
 
     socket.on('offline',(data)=>{
         console.log(data,'offline')
-        chatHelper.registerOffline(data.useId).
+        chatHelper.registerOffline(data.userId).
         then(data=>console.log(data))
         .catch(err=>console.log(err))
     })

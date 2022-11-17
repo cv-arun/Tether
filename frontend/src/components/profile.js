@@ -7,7 +7,8 @@ import { useDispatch } from 'react-redux';
 import Follow from './follow';
 import ProfilePic from './updateProfilePic';
 import getPost from '../api.js/getAllPost';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+import EditProfile from './editProfile';
 
 function Profile() {
     const dispatch = useDispatch()
@@ -18,7 +19,6 @@ function Profile() {
     const [mobile, setMobile] = useState()
     useEffect(() => {
         getPost(true).then(data => {
-            console.log(data)
             setPost(data)
         })
         window.screen.availWidth < 450 ? setMobile(true) : setMobile(false)
@@ -34,8 +34,11 @@ function Profile() {
                         </div>
                         <div className='w-3/4 pl-5'>
                             <div className='flex '>
-                                <h1 className='text-[28px] place-self-center'>Arun </h1>
-                                <button className=' m-2  p-1 ring-1'>Edit Profile</button>
+                                <h1 className='text-[28px] place-self-center'>{user?.name} </h1>
+                                <button className=' m-2  p-1 ring-1'
+                                    onClick={() => dispatch(openReducer({ open: true, component: <EditProfile /> }))}>
+                                    Edit Profile
+                                </button>
                             </div>
                             <div>
                                 <button onClick={() => dispatch(openReducer({ open: true, component: <Follow Following={true} /> }))}
@@ -45,18 +48,12 @@ function Profile() {
 
                             </div>
                             {!mobile && <div >
-                                <p>eat code sleep</p>
-                                <p>eat code sleep</p>
-                                <p>eat code sleep</p>
-                                <p>eat code sleep</p>
+                                {user?.bio}
                             </div>}
                         </div>
                     </div>
                     {mobile && <div className='m-3'>
-                        <p>eat code  mobile</p>
-                        <p>eat code sleep</p>
-                        <p>eat code sleep</p>
-                        <p>eat code sleep</p>
+                        {user?.bio}
                     </div>}
                 </div>
 

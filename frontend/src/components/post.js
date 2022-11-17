@@ -58,7 +58,7 @@ function Post({ curr }) {
             <div key={curr._id} className='max-w-[690px] shadow my-1 bg-white rounded-lg flex flex-col'>
                 <div className='flex mt-2 px-3'>
 
-                    <img className=' max-h-12 my-auto rounded-full' src={curr.user.picture} alt='profile' />
+                    <img className=' max-h-12 my-auto rounded-full' src={curr.user.picture} alt='failed to load profile' />
 
                     <div className='m-3 '>
                         <h3 className='m-1 text-lg '>{curr.user.first_name}</h3>

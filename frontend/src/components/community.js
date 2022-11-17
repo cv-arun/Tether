@@ -70,8 +70,8 @@ function Community() {
                 <hr />
                 {tabs === 1 && <div className='flex flex-wrap gap-2 '>
                     {followers?.map((curr, index) => {
-                        return <div key={index} className='bg-white shadow-lg w-[150px] md:w-[180px] mx-auto flex flex-col gap-3 h-fit p-2'>
-                            <img src='https://www.zimlive.com/dating/wp-content/themes/gwangi/assets/images/avatars/user-avatar.png' alt='profile' />
+                        return <div key={index} className='bg-white shadow-lg w-[150px] md:w-[180px] mx-auto flex flex-col gap-3 h-fit p-2 rounded-xl'>
+                            <img src={curr.picture} alt='profile' className='rounded-xl'/>
                             <p className='px-1'>Name</p>
                             <div className='px-1'><Button className='w-full' variant="contained">Remove</Button></div>
                         </div>
@@ -82,8 +82,8 @@ function Community() {
                 </div>}
                 {tabs === 2 && <div className='flex flex-wrap gap-2 ' onClick={handleClick2}>
                     {following?.map((curr, index) => {
-                        return <div key={index} className='bg-white shadow-lg w-[150px] md:w-[180px] mx-auto flex flex-col gap-3 h-fit p-2'>
-                            <img src={curr.picture} alt='profile' />
+                        return <div key={index} className='bg-white shadow-lg w-[150px] md:w-[180px] mx-auto flex flex-col gap-3 h-fit p-2 rounded-xl'>
+                            <img src={curr.picture} alt='profile' className='rounded-xl shadow-inner'/>
                             <p className='px-1'>{`${curr.first_name} ${curr.last_name}`}</p>
                             <div className='px-1'><Button id={`${curr._id}`} className='w-full' variant="contained">Following</Button></div>
                         </div>
@@ -92,8 +92,8 @@ function Community() {
                 </div>}
                 {tabs === 3 && <div className='flex flex-wrap gap-4' onClick={handleClick}>
                     {people?.map((curr, index) => {
-                        return <div key={index} className='bg-white shadow-lg w-[150px] md:w-[180px]  mx-auto flex flex-col gap-2 h-fit p-2'>
-                            <img src={curr.picture} alt='profile' />
+                        return <div key={index} className='bg-white shadow-lg w-[150px] md:w-[180px]  mx-auto flex flex-col gap-2 h-fit p-2 rounded-xl'>
+                            <img src={curr.picture} alt='profile' className='rounded-xl shadow-inner'/>
                             <p className='px-1'>{curr.first_name + ' ' + curr.last_name}</p>
                             <div className='px-1'><Button id={`${curr._id}`} className='w-full' variant="contained">Follow</Button></div>
                         </div>

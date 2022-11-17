@@ -39,5 +39,10 @@ module.exports = {
         userHelper.refreshUSer(req.userId).then(data =>{
             res.json(data)
         }).catch(err=>res.json(err))
+    },
+    editProfile:(req,res,next)=>{
+        userHelper.EditProfile(req.userId,req.body).then(data=>{
+            res.json(data)
+        })
     }
 }

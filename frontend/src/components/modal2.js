@@ -42,7 +42,7 @@ export default function Modal2() {
                 aria-describedby="parent-modal-description"
             >
                 <Box sx={{ ...style, width: 400 }}>
-                    <div className='h-80 bg-white'>
+                    <div className=' bg-white'>
                         <span className='w-full flex flex-row-reverse '><CloseIcon onClick={handleClose} /></span>
                         {obj && obj.component}
                     </div>

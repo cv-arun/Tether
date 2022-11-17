@@ -6,7 +6,10 @@ export const userSlice = createSlice({
         user:{
             name:'',
             picture:'',
-            userId:''
+            userId:'',
+            lastName:'',
+            DOB:'',
+            bio:'',
         }
     },
     reducers: {
@@ -15,6 +18,9 @@ export const userSlice = createSlice({
            
             state.user ={
                 name:data?.name,
+                lastName:data?.lastName,
+                DOB:data?.DOB,
+                bio:data?.bio,
                 picture:data?.picture,
                 userId:data?.userId
             }
