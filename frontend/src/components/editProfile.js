@@ -8,7 +8,7 @@ import { closeReducer } from '../redux/modal2';
 function EditProfile() {
   const dispatch=useDispatch()
   const user = useSelector((state) => state.userReducer.user)
-  const [formData, setFormData] = useState({
+  const [formData,setFormData] = useState({
     firstName: user?.name,
     lastName: user?.lastName,
     DOB: user?.DOB,
@@ -25,9 +25,10 @@ function EditProfile() {
       dispatch(closeReducer())
     })
   }
+ 
 
   return (
-    <div className='h-80 p-4 '>
+    <div className='h-80 p-4 overflow-y-auto scrollbar-hide'>
       <div className='grid grid-cols-2 gap-2'>
         <div class="form-group mb-3">
           <label for="exampleInputEmail1" class="form-label inline-block mb-2 text-gray-700">First Name</label>
@@ -47,17 +48,17 @@ function EditProfile() {
 
       <div class="form-group mb-3">
         <label for="exampleInputEmail1" class="form-label inline-block mb-2 text-gray-700">DOB</label>
-        <input type="date" value={formData.DOB} class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700
+        <input type="date" min="1960-01-01" max="2012-12-31" value={formData.DOB} class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700
         bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out  m-0
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInputEmail1"
           aria-describedby="emailHelp" onChange={(e) => setFormData({ ...formData, DOB: e.target.value })} />
       </div>
       <div class="form-group mb-3">
-        <label for="exampleInputEmail1" value={formData.bio} class="form-label inline-block mb-2 text-gray-700">Bio</label>
+        <label for="exampleInputEmail1"  class="form-label inline-block mb-2 text-gray-700">Bio</label>
         <textarea type="text" class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700
         bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out  m-0
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="exampleInputEmail1"
-          aria-describedby="emailHelp" placeholder="Bio..." onChange={(e) => setFormData({ ...formData, bio: e.target.value })}/>
+          aria-describedby="emailHelp" placeholder="Bio..." value={formData?.bio} onChange={(e) => setFormData({ ...formData, bio: e.target.value })}/>
       </div>
       <div class="flex space-x-2 justify-center">
         <button

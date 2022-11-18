@@ -72,9 +72,17 @@ exports.uploadImages = async (req, res) => {
       }
 
     }
-console.log(profile,'profile')
-    profile==true ? userHelper.updateProfile(req.userId, images).then(data => res.json({ msg: 'profile updated' })) :
-      postHelper.updataPostDetails(profile, caption, images, req.userId, privacy).then(data => res.json({ msg: 'db updated' }));
+
+    profile == true ? userHelper.updateProfile(req.userId, images).then(data => {
+      res.json({ msg: 'profile updated' })
+    }) :
+      postHelper.updataPostDetails(profile, caption, images, req.userId, privacy).
+        then(data => {
+         
+          postHelper.setPostNotification(req.userId,data._id)
+            .then(data => console.log(data,'after noti'))
+          res.json({ msg: 'db updated' })
+        });
 
   } catch (error) {
     return res.status(500).json({ message: error.message });

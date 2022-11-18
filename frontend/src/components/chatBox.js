@@ -61,7 +61,7 @@ function ChatBox() {
     return (
         <>
             <div className='w-full md:h-[85vh] h-[80vh] bg-white opacity-80 rounded-tr-2xl rounded-br-2xl flex flex-col'>
-                {friendDetails?._id && <><div className='w-full h-[80px] flex shadow-2xl'>
+                {friendDetails?._id ? <><div className='w-full h-[80px] flex shadow-2xl'>
                     <div className='flex flex-col justify-center ' onClick={() => dispatch(openChatBoxReducer(false))}><ArrowBackIcon /></div>
                     <div className='md:ml-5 ml-2 my-auto'>
                         <img className=' max-h-[75px] rounded-full' src={friendDetails.picture} alt='profile' />
@@ -70,7 +70,7 @@ function ChatBox() {
                         <span className='text-2xl mt-4'>{friendDetails.first_name}</span>
                         <span className='text-lg'>{friendDetails?.isOnline ? 'Online'
                             : <span className='text-sm'>
-                               Active <Moment className=' mx-2 w-[80px]' element="span" fromNow ago>{friendDetails?.lastActive}</Moment>ago
+                                Active <Moment className=' mx-2 w-[80px]' element="span" fromNow ago>{friendDetails?.lastActive}</Moment>ago
                             </span>}
                         </span>
 
@@ -79,6 +79,8 @@ function ChatBox() {
 
                 </div>
                     {show && <div className='fixed z-50 xl:-translate-x-[120%]'>
+                        <img className='w-full h-full absolute' src='https://image.freepik.com/free-vector/geometric-pattern-seamless-graphic-pattern-80s-90s-trendy-styles-black-background-black-white-pattern-with-different-shapes-objects-wrapping-paper-background_136321-1180.jpg' alt='bg' />
+
                         <EmojiPicker onEmojiClick={imojiClicked} />
                     </div>}
                     <div className='w-full flex-grow shadow-inner bg-white flex flex-col-reverse overflow-y-auto scrollbar-hide'>
@@ -94,14 +96,14 @@ function ChatBox() {
                             <AddReactionIcon sx={{ marginY: 'auto', color: 'blue' }} />
                         </span>
                         <input className='w-full ml-10  focus-visible:outline-none'
-                            placeholder='Search...' value={text}
+                            placeholder='Message...' value={text}
                             ref={chatinput} onChange={(e) => setText(e.target.value)}
                             onKeyPress={(event) => {
                                 event.key === "Enter" && sendChat();
                             }} />
                         <span className='flex align-middle' onClick={sendChat}><SendOutlinedIcon sx={{ marginY: 'auto' }} /></span>
 
-                    </div></>}
+                    </div></>:<div className='mx-auto my-auto'>Please choose someone to chat</div>}
 
             </div>
         </>

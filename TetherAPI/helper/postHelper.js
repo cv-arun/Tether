@@ -1,6 +1,6 @@
 const postModel = require('../model/postModel');
 const userModel = require('../model/userModel')
-
+const socketServer = require('../socketServer')
 
 module.exports = {
 
@@ -40,9 +40,10 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             try {
                 let likes = await postModel.findOne({ _id: postId, Likes: userId })
-              
+
                 if (likes) {
                     let data = await postModel.findByIdAndUpdate(postId, { $pull: { Likes: userId } })
+
                     resolve({ msg: 'Unliked' })
                 } else {
                     let data = await postModel.findByIdAndUpdate(postId, { $push: { Likes: userId } })
@@ -60,9 +61,9 @@ module.exports = {
                 let userCommnent = {
                     comment: text,
                     commentBy: userId,
-                    commentAt:new Date()
+                    commentAt: new Date()
                 }
-                let data = await postModel.findByIdAndUpdate(postId, { $push: { comments:{ $each:[userCommnent] ,$position:0}} })
+                let data = await postModel.findByIdAndUpdate(postId, { $push: { comments: { $each: [userCommnent], $position: 0 } } })
                 resolve({ msg: 'comment added' })
             } catch (err) {
                 reject(err)
@@ -70,11 +71,11 @@ module.exports = {
 
         })
     },
-    removeCommenent: (postId,commentId) => {
+    removeCommenent: (postId, commentId) => {
         return new Promise(async (resolve, reject) => {
             try {
-             console.log('remove comment',postId,commentId)
-                let data = await postModel.findByIdAndUpdate(postId, { $pull: { comments:{_id:commentId}} })
+
+                let data = await postModel.findByIdAndUpdate(postId, { $pull: { comments: { _id: commentId } } })
                 resolve({ msg: 'comment removed' })
             } catch (err) {
                 reject(err)
@@ -82,6 +83,26 @@ module.exports = {
 
         })
     },
+    setPostNotification: (usrId, postId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let data = await userModel.findById(usrId, { following: 1 })
+                let notification = {
+                    text: ' added a new post',
+                    friend: data._id,
+                    time: new Date(),
+                    ref: postId
+                }
+                data?.following.map(async (id) => {
+                    let user = await userModel.findByIdAndUpdate(id, { $push: { notifications: { $each: [notification], $position: 0 } } })
+
+                })
+                resolve({ msg: 'post notification completed' })
+            } catch (err) {
+                console.log(err)
+            }
+        })
+    }
 
 
 }

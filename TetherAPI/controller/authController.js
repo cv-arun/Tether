@@ -44,5 +44,11 @@ module.exports = {
     },
     is_logged_in:(req,res,next)=>{
      res.json({loggedIn:'loggedIn'})
+    },
+    updtePassword:(req,res)=>{
+       
+        authhelper.updatePassword(req.userId,req.body).then(data=>{
+            res.json(data)
+        }).catch(err=>res.json(err))
     }
 }

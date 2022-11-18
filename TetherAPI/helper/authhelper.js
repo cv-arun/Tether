@@ -39,8 +39,8 @@ const authHelper = {
                     userId: user._id,
                     name: user.first_name,
                     picture: user.picture,
-                    lastName:user.last_name,
-                    DOB:user.DOB
+                    lastName: user.last_name,
+                    DOB: user.DOB
                 })
             }
 
@@ -63,10 +63,10 @@ const authHelper = {
                                 user: {
                                     userId: userData._id,
                                     name: userData.first_name,
-                                    lastName:userData.last_name,
+                                    lastName: userData.last_name,
                                     picture: userData.picture,
-                                    bio:userData.details?.bio,
-                                    DOB:userData.DOB
+                                    bio: userData.details?.bio,
+                                    DOB: userData.DOB
                                 }
                             }
                             user.token = generateToken({
@@ -92,6 +92,28 @@ const authHelper = {
     doUpdateUser: (userData) => {
         return new Promise((resolve, reject) => {
 
+        })
+    },
+    updatePassword: (userId, data) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let user=await userModel.findById(userId)
+              
+              let match=await  bcrypt.compare(data.currentPassword, user.password)
+            if(match){
+                console.log(match,'match')
+                let newPassword=await bcrypt.hash(data.newPassword,10)
+                console.log(newPassword,'dagaaaaaaaaaaaaaaa')
+                let result=await userModel.findByIdAndUpdate(userId,{password:newPassword})
+                resolve({text:'password updated',color:'text-green-700'})
+
+            }else{
+                resolve({text:'enterd wrong credentials',color:'text-red-700'})
+            }
+               
+            } catch (err) {
+                reject(err)
+            }
         })
     }
 

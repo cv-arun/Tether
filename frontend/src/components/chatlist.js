@@ -50,7 +50,7 @@ function ChatList() {
                     </div>
                 </div>
                 <div className='flex flex-col gap-1 overflow-y-auto scrollbar-hide'>
-                    {data?.map((curr) => <div className='flex' onClick={() => selectChat(curr._id)}>
+                    {following.length!==0? data.length!==0 ?data?.map((curr) => <div className='flex' onClick={() => selectChat(curr._id)}>
                         <div className='md:w-1/6 w-2/6 my-auto'>
                             <img className=' max-h-[100%] rounded-full' src={curr.picture} alt='profile' />
                         </div>
@@ -59,7 +59,8 @@ function ChatList() {
                                 <span className='text-2xl'>{curr.first_name}</span>
                             </p>
                         </div>
-                    </div>)}
+                    </div>):<div className='mx-auto mt-10'> No result found </div> :<div className='px-3'> You are not following any one<br/>
+                    you can find someone to follow  from community section</div>}
                 </div>
             </div>
         </>

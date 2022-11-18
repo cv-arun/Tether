@@ -6,19 +6,16 @@ const userSchema = mongoose.Schema(
   {
     first_name: {
       type: String,
-      // required: [true, "first name is required"],
       trim: true,
       text: true,
     },
     last_name: {
       type: String,
-      // required: [true, "last name is required"],
       trim: true,
       text: true,
     },
     username: {
       type: String,
-      // required: [true, "username is required"],
       trim: true,
       text: true,
       unique: true,
@@ -124,9 +121,26 @@ const userSchema = mongoose.Schema(
         },
       },
     ],
+    notifications: [{
+      text: String,
+      read: {
+        type: Boolean,
+        default: false
+      },
+      time: Date,
+      friend:{
+        type:ObjectId,
+        ref:'User'
+      },
+      ref:{
+        type:ObjectId,
+        ref:'Post'
+      },
+    }],
     isOnline: Boolean,
     SocketId: String,
-    lastActive: Date
+    lastActive: Date,
+
   },
   {
     timestamps: true,

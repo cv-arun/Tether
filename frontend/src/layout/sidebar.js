@@ -102,9 +102,9 @@ export default function Sidebar(props) {
         dispatch(userReducer())
     }, [])
 
+    const user = useSelector((state) => state.userReducer.user)
     const socket = useSelector(state => state.socket.socket);
-    const user = useSelector((state) => state.userReducer.user);
-    
+
     React.useEffect(() => {
         socket.emit('online', { userId: user.userId })
         return () => socket.emit('offline', { userId: user.userId })
@@ -128,12 +128,11 @@ export default function Sidebar(props) {
     }, [])
     const navigate = useNavigate()
     const theme = useTheme();
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
 
     const handleDrawerOpen = () => {
         setOpen(true);
     };
-
     const handleDrawerClose = () => {
         setOpen(false);
     };
@@ -180,7 +179,7 @@ export default function Sidebar(props) {
     return (
         <Box sx={{ display: 'flex', backgroundColor: '#f0f2f5', minHeight: '100vh', minWidth: '100vw' }}>
             <CssBaseline />
-            <AppBar position="fixed" open={open} sx={{ backgroundColor: 'white', color: 'black',boxShadow:'none' }} >
+            <AppBar position="fixed" open={open} sx={{ backgroundColor: 'white', color: 'black', boxShadow: 'none' }} >
                 <Toolbar>
                     {!isMob && <IconButton
                         color="inherit"
@@ -195,13 +194,13 @@ export default function Sidebar(props) {
                         <MenuIcon />
                     </IconButton>}
                     <Typography variant="h6" noWrap component="div">
-                    {open ? '' : 'Tether'}
+                        {open ? '' : 'Tether'}
                     </Typography>
                 </Toolbar>
             </AppBar>
             {!isMob && <Drawer variant="permanent" open={open} >
-                <DrawerHeader sx={{ justifyContent:'space-between' }}>
-                    <Typography variant="h6" noWrap component="div" sx={{flexGrow:'1',textAlign:'center' }}>
+                <DrawerHeader sx={{ justifyContent: 'space-between' }}>
+                    <Typography variant="h6" noWrap component="div" sx={{ flexGrow: '1', textAlign: 'center' }}>
                         Tether
                     </Typography>
                     <IconButton onClick={handleDrawerClose}>
@@ -225,7 +224,7 @@ export default function Sidebar(props) {
                                         minWidth: 0,
                                         mr: open ? 3 : 'auto',
                                         justifyContent: 'center',
-                                        
+
                                     }}
                                 >
                                     {content.icon}

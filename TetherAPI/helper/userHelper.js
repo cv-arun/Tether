@@ -33,6 +33,15 @@ const userHelper = {
             }).catch(err => reject(err))
         })
     },
+    removeFollow: (myId, friendId) => {
+        return new Promise((resolve, reject) => {
+            userModel.findByIdAndUpdate(myId, { $pull: { followers: friendId } }).then(data => {
+                userModel.findByIdAndUpdate(friendId, { $pull: { following: myId } }).then(data => {
+                    resolve(data)
+                }).catch(err => reject(err))
+            }).catch(err => reject(err))
+        })
+    },
 
     getFollow: (myId) => {
         return new Promise((resolve, reject) => {
@@ -91,6 +100,16 @@ const userHelper = {
                     bio: userData.details?.bio,
                     DOB: userData.DOB
                 }
+                resolve(user)
+            } catch (err) {
+                reject(err)
+            }
+        })
+    },
+    getNotification: (userId) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let user = await userModel.findById(userId, { notifications: 1 }).populate('notifications.friend','first_name picture')
                 resolve(user)
             } catch (err) {
                 reject(err)
