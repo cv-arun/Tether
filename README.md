@@ -14,7 +14,7 @@ Live link:http://t-ether.click
 ## Features
 - Live chat -Users can chat with each other
 - Users can Login / SignUp with Google
-- Authorize with JWT
+- Authorized with JWT
 - User can create post with or without a photo
 - User can Like and Commend each others post
 - User can follow and Unfollow other Users
